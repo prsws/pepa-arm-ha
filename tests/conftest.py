@@ -97,11 +97,11 @@ def _create_mock_hass(*, minimal: bool = False, with_loop: bool = True, tmp_path
         mock.async_create_background_task = MagicMock(side_effect=mock_create_task)
         mock._test_tasks = created_tasks
 
-        # Mock exposed entities data structure (required by VectorDBManager)
-        # Note: DATA_EXPOSED_ENTITIES = 'homeassistant.exposed_entites' (HA typo, intentional)
+        # Mock exposed entities data structure (required by VectorDBManager and async_should_expose)
         mock_exposed_entities = MagicMock()
         mock_exposed_entities.async_should_expose.return_value = True
         mock.data["homeassistant.exposed_entites"] = mock_exposed_entities
+        mock.data["homeassistant.exposed_entities"] = mock_exposed_entities
 
         # Mock registries to prevent AttributeError
         from homeassistant.helpers import entity_registry as er
