@@ -168,8 +168,7 @@ class TestGracefulDegradation:
 
                 # Verify error was logged
                 assert any(
-                    "error" in record.message.lower()
-                    for record in caplog.records
+                    "error" in record.message.lower() for record in caplog.records
                 ), "Expected error to be logged when context retrieval fails"
 
     async def test_memory_system_unavailable(

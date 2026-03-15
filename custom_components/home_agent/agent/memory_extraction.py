@@ -267,9 +267,7 @@ class MemoryExtractionMixin:
         """Call the LLM API (provided by LLMMixin)."""
         ...
 
-    def _format_conversation_for_extraction(
-        self, messages: list[dict[str, Any]]
-    ) -> str:
+    def _format_conversation_for_extraction(self, messages: list[dict[str, Any]]) -> str:
         """Format conversation history for memory extraction.
 
         Args:
@@ -421,9 +419,7 @@ Return ONLY valid JSON, no other text:
 
         return prompt
 
-    async def _call_primary_llm_for_extraction(
-        self, extraction_prompt: str
-    ) -> dict[str, Any]:
+    async def _call_primary_llm_for_extraction(self, extraction_prompt: str) -> dict[str, Any]:
         """Call primary/local LLM for memory extraction.
 
         Args:
@@ -456,9 +452,7 @@ Return ONLY valid JSON, no other text:
                 temperature=0.3,
             )
 
-            content = (
-                response.get("choices", [{}])[0].get("message", {}).get("content", "")
-            )
+            content = response.get("choices", [{}])[0].get("message", {}).get("content", "")
 
             return {
                 "success": True,
@@ -526,21 +520,23 @@ Return ONLY valid JSON, no other text:
             for memory_data in memories:
                 try:
                     # Validate memory using MemoryValidator
-                    is_valid, rejection_reason = self.memory_validator.validate(
-                        memory_data
-                    )
+                    is_valid, rejection_reason = self.memory_validator.validate(memory_data)
 
                     if not is_valid:
-                        content = memory_data.get("content", "")[:50] if isinstance(
-                            memory_data, dict
-                        ) else str(memory_data)[:50]
+                        content = (
+                            memory_data.get("content", "")[:50]
+                            if isinstance(memory_data, dict)
+                            else str(memory_data)[:50]
+                        )
                         _LOGGER.debug(
                             "Rejecting memory (%s): %s",
                             rejection_reason,
                             content,
                         )
                         # Track rejection reason
-                        rejection_counts[rejection_reason] = rejection_counts.get(rejection_reason, 0) + 1
+                        rejection_counts[rejection_reason] = (
+                            rejection_counts.get(rejection_reason, 0) + 1
+                        )
                         continue
 
                     content = memory_data["content"]
@@ -672,9 +668,7 @@ Return ONLY valid JSON, no other text:
                 result = await self._call_primary_llm_for_extraction(extraction_prompt)
 
                 if not result.get("success"):
-                    _LOGGER.error(
-                        "Local LLM memory extraction failed: %s", result.get("error")
-                    )
+                    _LOGGER.error("Local LLM memory extraction failed: %s", result.get("error"))
                     return
 
                 extraction_result = result.get("result", "[]")
@@ -695,7 +689,7 @@ Return ONLY valid JSON, no other text:
                         "conversation_id": conversation_id,
                         "memories_extracted": stored_count,
                         "extraction_llm": extraction_llm,
-                        "timestamp": datetime.now().isoformat(timespec='seconds'),
+                        "timestamp": datetime.now().isoformat(timespec="seconds"),
                     },
                 )
 

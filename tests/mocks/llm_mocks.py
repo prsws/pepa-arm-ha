@@ -269,9 +269,7 @@ def create_streaming_response(
     if tool_calls:
         # For simplicity, only support single tool call in streaming
         tool_name, tool_args = tool_calls[0]
-        return create_streaming_tool_call_chunks(
-            tool_name, tool_args, prefix_content=content
-        )
+        return create_streaming_tool_call_chunks(tool_name, tool_args, prefix_content=content)
     elif content:
         return create_streaming_chunks(content, chunk_size)
     else:
@@ -432,11 +430,13 @@ class MockLLMServer:
                 break
 
         # Record the call
-        self.call_history.append({
-            "messages": messages,
-            "stream": stream,
-            "user_text": user_text,
-        })
+        self.call_history.append(
+            {
+                "messages": messages,
+                "stream": stream,
+                "user_text": user_text,
+            }
+        )
 
         # Check streaming responses first if streaming
         if stream:
@@ -454,7 +454,10 @@ class MockLLMServer:
                     content = response["choices"][0]["message"].get("content", "")
                     if content:
                         return create_streaming_chunks(content)
-                    return ['data: {"choices":[{"delta":{"role":"assistant"}}]}\n\n', "data: [DONE]\n\n"]
+                    return [
+                        'data: {"choices":[{"delta":{"role":"assistant"}}]}\n\n',
+                        "data: [DONE]\n\n",
+                    ]
                 return response
 
         # Return default
@@ -542,18 +545,10 @@ RESPONSES = {
     "greeting": create_chat_completion_response(
         "Hello! I'm your home assistant. How can I help you today?"
     ),
-    "acknowledgment": create_chat_completion_response(
-        "Done! I've completed that action for you."
-    ),
-    "query_light_on": create_chat_completion_response(
-        "The living room light is currently on."
-    ),
-    "query_light_off": create_chat_completion_response(
-        "The living room light is currently off."
-    ),
-    "query_temperature": create_chat_completion_response(
-        "The current temperature is 72°F."
-    ),
+    "acknowledgment": create_chat_completion_response("Done! I've completed that action for you."),
+    "query_light_on": create_chat_completion_response("The living room light is currently on."),
+    "query_light_off": create_chat_completion_response("The living room light is currently off."),
+    "query_temperature": create_chat_completion_response("The current temperature is 72°F."),
     "error_response": create_chat_completion_response(
         "I'm sorry, I encountered an error processing your request."
     ),

@@ -312,11 +312,15 @@ async def test_conversation_finished_event(
 
         # Verify exact token counts match the mock LLM response
         # Mock response has: prompt_tokens: 10, completion_tokens: 5, total_tokens: 15
-        assert tokens["prompt"] == 10, f"tokens.prompt should be 10 (from mock), got {tokens['prompt']}"
+        assert (
+            tokens["prompt"] == 10
+        ), f"tokens.prompt should be 10 (from mock), got {tokens['prompt']}"
         assert (
             tokens["completion"] == 5
         ), f"tokens.completion should be 5 (from mock), got {tokens['completion']}"
-        assert tokens["total"] == 15, f"tokens.total should be 15 (from mock), got {tokens['total']}"
+        assert (
+            tokens["total"] == 15
+        ), f"tokens.total should be 15 (from mock), got {tokens['total']}"
 
         # Total should equal sum of prompt + completion
         expected_total = tokens["prompt"] + tokens["completion"]
@@ -355,9 +359,7 @@ async def test_conversation_finished_event(
         assert (
             performance["context_latency_ms"] >= 0
         ), f"context_latency_ms should be >= 0, got {performance['context_latency_ms']}"
-        assert (
-            performance["ttft_ms"] >= 0
-        ), f"ttft_ms should be >= 0, got {performance['ttft_ms']}"
+        assert performance["ttft_ms"] >= 0, f"ttft_ms should be >= 0, got {performance['ttft_ms']}"
 
         # For non-streaming, TTFT should equal LLM latency (first iteration)
         # TTFT is set on the first LLM call, so it should be > 0 if LLM was called
@@ -705,9 +707,7 @@ async def test_context_injected_event(
         # Verify event contains token_count
         assert "token_count" in event_data, "Event must contain token_count"
         token_count = event_data["token_count"]
-        assert isinstance(
-            token_count, int
-        ), f"token_count should be int, got {type(token_count)}"
+        assert isinstance(token_count, int), f"token_count should be int, got {type(token_count)}"
         assert token_count >= 0, f"token_count should be >= 0, got {token_count}"
 
         await agent.close()
@@ -797,7 +797,9 @@ async def test_history_saved_event(
             assert isinstance(
                 conversation_count, int
             ), f"conversation_count should be int, got {type(conversation_count)}"
-            assert conversation_count > 0, f"conversation_count should be > 0, got {conversation_count}"
+            assert (
+                conversation_count > 0
+            ), f"conversation_count should be > 0, got {conversation_count}"
 
             message_count = event_data["message_count"]
             assert isinstance(
@@ -806,9 +808,7 @@ async def test_history_saved_event(
             assert message_count > 0, f"message_count should be > 0, got {message_count}"
 
             size_bytes = event_data["size_bytes"]
-            assert isinstance(
-                size_bytes, int
-            ), f"size_bytes should be int, got {type(size_bytes)}"
+            assert isinstance(size_bytes, int), f"size_bytes should be int, got {type(size_bytes)}"
             assert size_bytes >= 0, f"size_bytes should be >= 0, got {size_bytes}"
 
         await agent_with_history.close()
@@ -1179,7 +1179,9 @@ async def test_conversation_finished_token_counts_accurate(
 
             # Verify token counts in event match exactly
             finished_events = event_capture.get_events(EVENT_CONVERSATION_FINISHED)
-            assert len(finished_events) == 1, f"Expected 1 finished event, got {len(finished_events)}"
+            assert (
+                len(finished_events) == 1
+            ), f"Expected 1 finished event, got {len(finished_events)}"
 
             event_data = finished_events[0]
             tokens = event_data["tokens"]
@@ -1411,12 +1413,8 @@ async def test_streaming_error_event_fired(
             ), f"conversation_id mismatch: expected {conversation_id}, got {event_data['conversation_id']}"
 
             # Verify error details
-            assert isinstance(
-                event_data["error_type"], str
-            ), "error_type should be string"
-            assert isinstance(
-                event_data["error_message"], str
-            ), "error_message should be string"
+            assert isinstance(event_data["error_type"], str), "error_type should be string"
+            assert isinstance(event_data["error_message"], str), "error_message should be string"
             assert len(event_data["error_message"]) > 0, "error_message should not be empty"
 
         await agent.close()

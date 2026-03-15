@@ -767,9 +767,7 @@ class TestStatePreservation:
                     await async_reload_entry(test_hass, mock_config_entry)
 
                     # Verify memory-enabled config is preserved
-                    updated_config = dict(mock_config_entry.data) | dict(
-                        mock_config_entry.options
-                    )
+                    updated_config = dict(mock_config_entry.data) | dict(mock_config_entry.options)
                     assert updated_config[CONF_MEMORY_ENABLED] is True
 
                     # In a real scenario, the new memory manager would reconnect

@@ -384,16 +384,11 @@ def setup_entity_states(hass: HomeAssistant, states: list[State]) -> None:
     hass.states.async_all = MagicMock(return_value=states)
 
     # Update async_entity_ids to return IDs
-    hass.states.async_entity_ids = MagicMock(
-        return_value=[state.entity_id for state in states]
-    )
+    hass.states.async_entity_ids = MagicMock(return_value=[state.entity_id for state in states])
 
     # Add get() method for individual state retrieval
     hass.states.get = MagicMock(
-        side_effect=lambda entity_id: next(
-            (s for s in states if s.entity_id == entity_id),
-            None
-        )
+        side_effect=lambda entity_id: next((s for s in states if s.entity_id == entity_id), None)
     )
 
 

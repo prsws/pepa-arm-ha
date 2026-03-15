@@ -303,9 +303,9 @@ async def test_ttft_non_streaming_equals_llm_latency(
         #
         # For a simple query that doesn't trigger tools, they should be equal.
         # We allow a small tolerance for timing measurement differences.
-        assert ttft_ms <= llm_latency_ms, (
-            f"ttft_ms ({ttft_ms}) should be <= llm_latency_ms ({llm_latency_ms})"
-        )
+        assert (
+            ttft_ms <= llm_latency_ms
+        ), f"ttft_ms ({ttft_ms}) should be <= llm_latency_ms ({llm_latency_ms})"
 
         # Check if they're approximately equal (for single-iteration case)
         # If ttft_ms is much less than llm_latency_ms, it means multiple LLM calls happened

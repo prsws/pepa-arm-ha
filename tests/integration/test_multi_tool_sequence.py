@@ -14,8 +14,6 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from homeassistant.core import State
 
-from tests.integration.helpers import setup_entity_states
-from tests.mocks.llm_mocks import create_tool_call_response, create_chat_completion_response
 from custom_components.home_agent.agent import HomeAgent
 from custom_components.home_agent.const import (
     CONF_EMIT_EVENTS,
@@ -27,6 +25,8 @@ from custom_components.home_agent.const import (
     CONF_LLM_TEMPERATURE,
     CONF_TOOLS_MAX_CALLS_PER_TURN,
 )
+from tests.integration.helpers import setup_entity_states
+from tests.mocks.llm_mocks import create_chat_completion_response, create_tool_call_response
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -105,7 +105,12 @@ def multi_tool_entity_states() -> list[State]:
 
 @pytest.mark.asyncio
 async def test_query_then_control_sequence(
-    test_hass, llm_config, multi_tool_entity_states, session_manager, is_using_mock_llm, mock_llm_server
+    test_hass,
+    llm_config,
+    multi_tool_entity_states,
+    session_manager,
+    is_using_mock_llm,
+    mock_llm_server,
 ):
     """Test that the agent can query state and then control based on result.
 
@@ -150,14 +155,18 @@ async def test_query_then_control_sequence(
         # Add responses using add_sequence for multi-step tool calls
         if is_using_mock_llm and mock_llm_server:
             # Use sequence to handle: user message -> query -> control -> final response
-            mock_llm_server.add_sequence([
-                # First: query the bedroom light
-                create_tool_call_response("ha_query", {"entity_id": "light.bedroom"}),
-                # Second: turn it on
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}),
-                # Third: final response
-                create_chat_completion_response("The bedroom light is now on."),
-            ])
+            mock_llm_server.add_sequence(
+                [
+                    # First: query the bedroom light
+                    create_tool_call_response("ha_query", {"entity_id": "light.bedroom"}),
+                    # Second: turn it on
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}
+                    ),
+                    # Third: final response
+                    create_chat_completion_response("The bedroom light is now on."),
+                ]
+            )
 
         with maybe_mock_llm(is_using_mock_llm, mock_llm_server):
             agent = HomeAgent(test_hass, config, session_manager)
@@ -199,7 +208,12 @@ async def test_query_then_control_sequence(
 
 @pytest.mark.asyncio
 async def test_multiple_queries_in_sequence(
-    test_hass, llm_config, multi_tool_entity_states, session_manager, is_using_mock_llm, mock_llm_server
+    test_hass,
+    llm_config,
+    multi_tool_entity_states,
+    session_manager,
+    is_using_mock_llm,
+    mock_llm_server,
 ):
     """Test that the agent can execute multiple queries in sequence.
 
@@ -227,16 +241,20 @@ async def test_multiple_queries_in_sequence(
 
         # Add tool call responses using sequence for multiple queries
         if is_using_mock_llm and mock_llm_server:
-            mock_llm_server.add_sequence([
-                # First: query temperature
-                create_tool_call_response("ha_query", {"entity_id": "sensor.temperature"}),
-                # Second: query kitchen light
-                create_tool_call_response("ha_query", {"entity_id": "light.kitchen"}),
-                # Third: query living room light
-                create_tool_call_response("ha_query", {"entity_id": "light.living_room"}),
-                # Final response
-                create_chat_completion_response("The temperature is 68.5°F. The kitchen light and living room light are on."),
-            ])
+            mock_llm_server.add_sequence(
+                [
+                    # First: query temperature
+                    create_tool_call_response("ha_query", {"entity_id": "sensor.temperature"}),
+                    # Second: query kitchen light
+                    create_tool_call_response("ha_query", {"entity_id": "light.kitchen"}),
+                    # Third: query living room light
+                    create_tool_call_response("ha_query", {"entity_id": "light.living_room"}),
+                    # Final response
+                    create_chat_completion_response(
+                        "The temperature is 68.5°F. The kitchen light and living room light are on."
+                    ),
+                ]
+            )
 
         with maybe_mock_llm(is_using_mock_llm, mock_llm_server):
             agent = HomeAgent(test_hass, config, session_manager)
@@ -276,7 +294,12 @@ async def test_multiple_queries_in_sequence(
 
 @pytest.mark.asyncio
 async def test_multiple_controls_in_sequence(
-    test_hass, llm_config, multi_tool_entity_states, session_manager, is_using_mock_llm, mock_llm_server
+    test_hass,
+    llm_config,
+    multi_tool_entity_states,
+    session_manager,
+    is_using_mock_llm,
+    mock_llm_server,
 ):
     """Test that the agent can execute multiple control actions in one turn.
 
@@ -318,14 +341,22 @@ async def test_multiple_controls_in_sequence(
 
         # Add tool call responses using sequence for multiple controls
         if is_using_mock_llm and mock_llm_server:
-            mock_llm_server.add_sequence([
-                # First: turn on bedroom light
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}),
-                # Second: turn off kitchen light
-                create_tool_call_response("ha_control", {"action": "turn_off", "entity_id": "light.kitchen"}),
-                # Final response
-                create_chat_completion_response("I've turned on the bedroom light and turned off the kitchen light."),
-            ])
+            mock_llm_server.add_sequence(
+                [
+                    # First: turn on bedroom light
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}
+                    ),
+                    # Second: turn off kitchen light
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_off", "entity_id": "light.kitchen"}
+                    ),
+                    # Final response
+                    create_chat_completion_response(
+                        "I've turned on the bedroom light and turned off the kitchen light."
+                    ),
+                ]
+            )
 
         with maybe_mock_llm(is_using_mock_llm, mock_llm_server):
             agent = HomeAgent(test_hass, config, session_manager)
@@ -356,7 +387,9 @@ async def test_multiple_controls_in_sequence(
             # For mock LLM: Verify the expected tool calls were made
             if is_using_mock_llm:
                 # Should have service calls for both lights
-                assert len(service_calls) >= 2, f"Mock should have made service calls for both lights, got {len(service_calls)}"
+                assert (
+                    len(service_calls) >= 2
+                ), f"Mock should have made service calls for both lights, got {len(service_calls)}"
             # For real LLM: Only check that we got a valid response (no keyword matching)
             # Real LLM behavior is non-deterministic
 
@@ -365,7 +398,12 @@ async def test_multiple_controls_in_sequence(
 
 @pytest.mark.asyncio
 async def test_conditional_control_based_on_query(
-    test_hass, llm_config, multi_tool_entity_states, session_manager, is_using_mock_llm, mock_llm_server
+    test_hass,
+    llm_config,
+    multi_tool_entity_states,
+    session_manager,
+    is_using_mock_llm,
+    mock_llm_server,
 ):
     """Test conditional control based on query results.
 
@@ -408,12 +446,16 @@ async def test_conditional_control_based_on_query(
 
         # Add tool call response using sequence for temperature conditional check
         if is_using_mock_llm and mock_llm_server:
-            mock_llm_server.add_sequence([
-                # Query temperature to check if below 70
-                create_tool_call_response("ha_query", {"entity_id": "sensor.temperature"}),
-                # Final response (no control action needed per user instruction)
-                create_chat_completion_response("The current temperature is 68.5°F, which is below 70°F."),
-            ])
+            mock_llm_server.add_sequence(
+                [
+                    # Query temperature to check if below 70
+                    create_tool_call_response("ha_query", {"entity_id": "sensor.temperature"}),
+                    # Final response (no control action needed per user instruction)
+                    create_chat_completion_response(
+                        "The current temperature is 68.5°F, which is below 70°F."
+                    ),
+                ]
+            )
 
         with maybe_mock_llm(is_using_mock_llm, mock_llm_server):
             agent = HomeAgent(test_hass, config, session_manager)
@@ -458,7 +500,7 @@ async def test_conditional_control_based_on_query(
                 _LOGGER.warning(
                     "Conditional query triggered %d control services (non-deterministic LLM behavior): %s",
                     len(control_services),
-                    control_services
+                    control_services,
                 )
 
             await agent.close()
@@ -466,7 +508,12 @@ async def test_conditional_control_based_on_query(
 
 @pytest.mark.asyncio
 async def test_tool_sequence_with_errors(
-    test_hass, llm_config, multi_tool_entity_states, session_manager, is_using_mock_llm, mock_llm_server
+    test_hass,
+    llm_config,
+    multi_tool_entity_states,
+    session_manager,
+    is_using_mock_llm,
+    mock_llm_server,
 ):
     """Test that agent handles errors gracefully during multi-tool sequences.
 
@@ -509,14 +556,22 @@ async def test_tool_sequence_with_errors(
 
         # Add tool call responses using sequence for error handling test
         if is_using_mock_llm and mock_llm_server:
-            mock_llm_server.add_sequence([
-                # First control action (will succeed)
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}),
-                # Second control action (will fail due to error injection)
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "switch.fan"}),
-                # Final response acknowledging the partial success/error
-                create_chat_completion_response("I was able to turn on the bedroom light, but encountered an error with the fan."),
-            ])
+            mock_llm_server.add_sequence(
+                [
+                    # First control action (will succeed)
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}
+                    ),
+                    # Second control action (will fail due to error injection)
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "switch.fan"}
+                    ),
+                    # Final response acknowledging the partial success/error
+                    create_chat_completion_response(
+                        "I was able to turn on the bedroom light, but encountered an error with the fan."
+                    ),
+                ]
+            )
 
         with maybe_mock_llm(is_using_mock_llm, mock_llm_server):
             agent = HomeAgent(test_hass, config, session_manager)
@@ -557,7 +612,12 @@ async def test_tool_sequence_with_errors(
 
 @pytest.mark.asyncio
 async def test_max_tool_calls_enforcement(
-    test_hass, llm_config, multi_tool_entity_states, session_manager, is_using_mock_llm, mock_llm_server
+    test_hass,
+    llm_config,
+    multi_tool_entity_states,
+    session_manager,
+    is_using_mock_llm,
+    mock_llm_server,
 ):
     """Test that max tool calls per turn is enforced.
 
@@ -600,16 +660,24 @@ async def test_max_tool_calls_enforcement(
 
         # Add tool call responses using sequence for max calls test (will hit limit)
         if is_using_mock_llm and mock_llm_server:
-            mock_llm_server.add_sequence([
-                # First light
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}),
-                # Second light (should reach max_calls limit of 2)
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "light.kitchen"}),
-                # Third light (should be blocked by max_calls limit, but we include it in sequence)
-                create_tool_call_response("ha_control", {"action": "turn_on", "entity_id": "light.living_room"}),
-                # Final response (may not be reached due to max limit)
-                create_chat_completion_response("I've turned on the lights."),
-            ])
+            mock_llm_server.add_sequence(
+                [
+                    # First light
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "light.bedroom"}
+                    ),
+                    # Second light (should reach max_calls limit of 2)
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "light.kitchen"}
+                    ),
+                    # Third light (should be blocked by max_calls limit, but we include it in sequence)
+                    create_tool_call_response(
+                        "ha_control", {"action": "turn_on", "entity_id": "light.living_room"}
+                    ),
+                    # Final response (may not be reached due to max limit)
+                    create_chat_completion_response("I've turned on the lights."),
+                ]
+            )
 
         with maybe_mock_llm(is_using_mock_llm, mock_llm_server):
             agent = HomeAgent(test_hass, config, session_manager)

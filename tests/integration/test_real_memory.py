@@ -82,11 +82,13 @@ async def test_memory_extraction_flow(
     }
 
     # Mock entity exposure
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client), maybe_mock_embedding(
-        is_using_mock_embedding, mock_embedding_server
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client),
+        maybe_mock_embedding(is_using_mock_embedding, mock_embedding_server),
     ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
@@ -210,11 +212,13 @@ async def test_memory_recall(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client), maybe_mock_embedding(
-        is_using_mock_embedding, mock_embedding_server
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client),
+        maybe_mock_embedding(is_using_mock_embedding, mock_embedding_server),
     ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
@@ -353,11 +357,13 @@ async def test_memory_semantic_search(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client), maybe_mock_embedding(
-        is_using_mock_embedding, mock_embedding_server
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client),
+        maybe_mock_embedding(is_using_mock_embedding, mock_embedding_server),
     ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
@@ -497,11 +503,13 @@ async def test_memory_lifecycle(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client), maybe_mock_embedding(
-        is_using_mock_embedding, mock_embedding_server
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client),
+        maybe_mock_embedding(is_using_mock_embedding, mock_embedding_server),
     ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
@@ -603,11 +611,13 @@ async def test_memory_type_filtering(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client), maybe_mock_embedding(
-        is_using_mock_embedding, mock_embedding_server
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        maybe_mock_chromadb(is_using_mock_chromadb, mock_chromadb_client),
+        maybe_mock_embedding(is_using_mock_embedding, mock_embedding_server),
     ):
         test_hass.states.async_all = MagicMock(return_value=[])
 

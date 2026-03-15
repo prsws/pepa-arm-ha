@@ -94,9 +94,7 @@ class TestAgentCoreThinkingBlockStripping:
     """Test thinking block stripping in agent core response processing."""
 
     @pytest.mark.asyncio
-    async def test_strip_thinking_blocks_called_on_response(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_strip_thinking_blocks_called_on_response(self, agent, mock_hass, user_input):
         """Verify strip_thinking_blocks is called on LLM response content."""
         mock_response = {
             "choices": [
@@ -124,9 +122,7 @@ class TestAgentCoreThinkingBlockStripping:
                 mock_strip.assert_called()
 
     @pytest.mark.asyncio
-    async def test_empty_content_after_stripping_handled(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_empty_content_after_stripping_handled(self, agent, mock_hass, user_input):
         """Test handling when content is empty after stripping thinking blocks."""
         mock_response = {
             "choices": [
@@ -232,9 +228,7 @@ Line 3: Formulating response
         assert "Final answer" in response_text
 
     @pytest.mark.asyncio
-    async def test_thinking_block_with_special_characters(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_thinking_block_with_special_characters(self, agent, mock_hass, user_input):
         """Test thinking blocks containing special characters."""
         mock_response = {
             "choices": [
@@ -404,7 +398,9 @@ class TestAgentPreprocessUserMessage:
         assert result == "What's the weather?"
         assert "/no_think" not in result
 
-    def test_preprocess_strips_trailing_whitespace_when_disabled(self, mock_hass, mock_session_manager):
+    def test_preprocess_strips_trailing_whitespace_when_disabled(
+        self, mock_hass, mock_session_manager
+    ):
         """Test that whitespace is stripped before appending /no_think."""
         config = {
             "thinking_enabled": False,

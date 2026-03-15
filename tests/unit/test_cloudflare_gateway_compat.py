@@ -98,9 +98,7 @@ def _make_ok_response():
     resp = MagicMock()
     resp.status = 200
     resp.json = AsyncMock(
-        return_value={
-            "choices": [{"message": {"role": "assistant", "content": "ok"}}]
-        }
+        return_value={"choices": [{"message": {"role": "assistant", "content": "ok"}}]}
     )
     return resp
 
@@ -181,9 +179,7 @@ class TestStreamingTemplateRendering:
 
             # Consume the stream
             chunks = []
-            async for chunk in agent._call_llm_streaming(
-                [{"role": "user", "content": "hi"}]
-            ):
+            async for chunk in agent._call_llm_streaming([{"role": "user", "content": "hi"}]):
                 chunks.append(chunk)
 
         # Verify the Authorization header contains the RENDERED key,
@@ -191,9 +187,7 @@ class TestStreamingTemplateRendering:
         call_args = agent._session.post.call_args
         headers = call_args.kwargs["headers"]
 
-        assert "Authorization" in headers, (
-            "Authorization header should be present"
-        )
+        assert "Authorization" in headers, "Authorization header should be present"
 
         # This assertion will FAIL: current code sends the literal template
         # string because it never calls render_template_value.
@@ -224,9 +218,7 @@ class TestStreamingTemplateRendering:
         agent._session = _make_mock_session(mock_response)
 
         chunks = []
-        async for chunk in agent._call_llm_streaming(
-            [{"role": "user", "content": "hi"}]
-        ):
+        async for chunk in agent._call_llm_streaming([{"role": "user", "content": "hi"}]):
             chunks.append(chunk)
 
         call_args = agent._session.post.call_args
@@ -339,9 +331,7 @@ class TestRedirectAuthPreservation:
         # _MockStreamingAgent overrides _ensure_session, we test the post
         # call's allow_redirects parameter directly.
         chunks = []
-        async for chunk in agent._call_llm_streaming(
-            [{"role": "user", "content": "test"}]
-        ):
+        async for chunk in agent._call_llm_streaming([{"role": "user", "content": "test"}]):
             chunks.append(chunk)
 
         post_call = mock_session.post.call_args
@@ -463,16 +453,8 @@ class TestAuthErrorMessaging:
 
         # The error should mention checking configuration — not just say
         # "authentication failed" without guidance.
-        has_config_guidance = (
-            "check" in error_msg
-            or "verify" in error_msg
-            or "ensure" in error_msg
-        )
-        has_key_reference = (
-            "api key" in error_msg
-            or "api_key" in error_msg
-            or "key" in error_msg
-        )
+        has_config_guidance = "check" in error_msg or "verify" in error_msg or "ensure" in error_msg
+        has_key_reference = "api key" in error_msg or "api_key" in error_msg or "key" in error_msg
         has_template_or_proxy_hint = (
             "template" in error_msg
             or "proxy" in error_msg

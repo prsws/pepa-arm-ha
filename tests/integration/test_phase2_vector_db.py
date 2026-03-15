@@ -104,9 +104,7 @@ def mock_entity_states(mock_hass):
             "turn_on": {"fields": {}},
             "turn_off": {"fields": {}},
             "set_percentage": {
-                "fields": {
-                    "percentage": {"required": True, "description": "Percentage speed"}
-                }
+                "fields": {"percentage": {"required": True, "description": "Percentage speed"}}
             },
             "toggle": {"fields": {}},
         },

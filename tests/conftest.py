@@ -52,7 +52,9 @@ def _create_mock_hass(*, minimal: bool = False, with_loop: bool = True, tmp_path
     mock.config = MagicMock()
     if tmp_path:
         mock.config.config_dir = str(tmp_path)
-        mock.config.path = MagicMock(side_effect=lambda *args: "/".join([str(tmp_path)] + list(args)))
+        mock.config.path = MagicMock(
+            side_effect=lambda *args: "/".join([str(tmp_path)] + list(args))
+        )
     else:
         mock.config.config_dir = "/config"
         mock.config.path = MagicMock(side_effect=lambda *args: "/".join(["/config"] + list(args)))
@@ -104,9 +106,9 @@ def _create_mock_hass(*, minimal: bool = False, with_loop: bool = True, tmp_path
         mock.data["homeassistant.exposed_entities"] = mock_exposed_entities
 
         # Mock registries to prevent AttributeError
-        from homeassistant.helpers import entity_registry as er
         from homeassistant.helpers import area_registry as ar
         from homeassistant.helpers import device_registry as dr
+        from homeassistant.helpers import entity_registry as er
 
         # Entity registry
         mock_entity_registry = MagicMock()

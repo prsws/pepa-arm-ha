@@ -95,7 +95,9 @@ async def test_rtl_language_arabic(
         assert isinstance(response, str), "Response should be a string"
         assert len(response) > 0, "Response should not be empty"
         # Verify it contains Arabic characters (Unicode range U+0600 to U+06FF)
-        assert any('\u0600' <= c <= '\u06FF' for c in response), "Response should contain Arabic characters"
+        assert any(
+            "\u0600" <= c <= "\u06ff" for c in response
+        ), "Response should contain Arabic characters"
 
         await agent.close()
 
@@ -273,9 +275,9 @@ async def test_zero_width_characters(
         agent = HomeAgent(test_hass, config, session_manager)
 
         # Input with zero-width characters
-        zwj = "\u200D"  # Zero-width joiner
-        zwnj = "\u200C"  # Zero-width non-joiner
-        zwsp = "\u200B"  # Zero-width space
+        zwj = "\u200d"  # Zero-width joiner
+        zwnj = "\u200c"  # Zero-width non-joiner
+        zwsp = "\u200b"  # Zero-width space
 
         malicious_input = f"Turn{zwj}on{zwnj}the{zwsp}lights"
 
@@ -339,8 +341,10 @@ async def test_very_long_user_message(
         agent = HomeAgent(test_hass, config, session_manager)
 
         # Create a very long message (>10KB)
-        long_message = "Please turn on the lights and " + ("really " * 2000) + "make sure they're bright."
-        assert len(long_message.encode('utf-8')) > 10000, "Message should be >10KB"
+        long_message = (
+            "Please turn on the lights and " + ("really " * 2000) + "make sure they're bright."
+        )
+        assert len(long_message.encode("utf-8")) > 10000, "Message should be >10KB"
 
         with patch.object(agent, "_call_llm", return_value=mock_llm_response):
             response = await agent.process_message(
@@ -510,6 +514,7 @@ async def test_concurrent_conversations(
     2. Each conversation maintains separate state
     3. No race conditions or deadlocks
     """
+
     # Mock LLM response
     def create_mock_response(conv_id: str):
         return {
@@ -699,6 +704,8 @@ async def test_hebrew_rtl_text(
         assert isinstance(response, str), "Response should be a string"
         assert len(response) > 0, "Response should not be empty"
         # Verify it contains Hebrew characters (Unicode range U+0590 to U+05FF)
-        assert any('\u0590' <= c <= '\u05FF' for c in response), "Response should contain Hebrew characters"
+        assert any(
+            "\u0590" <= c <= "\u05ff" for c in response
+        ), "Response should contain Hebrew characters"
 
         await agent.close()

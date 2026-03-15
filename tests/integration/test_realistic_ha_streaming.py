@@ -142,7 +142,9 @@ class RealisticChatLogMock:
         6. Update unresponded_tool_results to signal if more iterations needed
         """
         self._call_count += 1
-        print(f"\n[RealisticChatLogMock] Call #{self._call_count} to async_add_delta_content_stream")
+        print(
+            f"\n[RealisticChatLogMock] Call #{self._call_count} to async_add_delta_content_stream"
+        )
 
         # Step 1: Consume all deltas
         role = None
@@ -158,7 +160,9 @@ class RealisticChatLogMock:
             if "tool_calls" in delta:
                 tool_calls.extend(delta["tool_calls"])
 
-        print(f"[RealisticChatLogMock] Stream consumed. role={role}, content_len={len(content_text)}, tool_calls={len(tool_calls)}")
+        print(
+            f"[RealisticChatLogMock] Stream consumed. role={role}, content_len={len(content_text)}, tool_calls={len(tool_calls)}"
+        )
 
         # Step 2: Build AssistantContent
         assistant_content = conversation.AssistantContent(
@@ -199,7 +203,9 @@ class RealisticChatLogMock:
             # For the FIRST call, we set it to trigger iteration
             # For subsequent calls, we clear it to end the loop
             if self._call_count == 1:
-                print("[RealisticChatLogMock] Setting unresponded_tool_results to trigger next iteration")
+                print(
+                    "[RealisticChatLogMock] Setting unresponded_tool_results to trigger next iteration"
+                )
                 self.unresponded_tool_results = [f"result_{tc.id}" for tc in tool_calls]
             else:
                 print("[RealisticChatLogMock] Clearing unresponded_tool_results to end loop")
@@ -331,10 +337,14 @@ async def test_realistic_streaming_with_tool_call(
 
                     # CRITICAL: Verify loop terminated after exactly 2 iterations
                     print(f"\nLLM was called {call_count[0]} times")
-                    print(f"ChatLog.async_add_delta_content_stream was called {mock_chat_log._call_count} times")
+                    print(
+                        f"ChatLog.async_add_delta_content_stream was called {mock_chat_log._call_count} times"
+                    )
 
                     assert call_count[0] == 2, f"Expected 2 LLM calls, got {call_count[0]}"
-                    assert mock_chat_log._call_count == 2, f"Expected 2 stream iterations, got {mock_chat_log._call_count}"
+                    assert (
+                        mock_chat_log._call_count == 2
+                    ), f"Expected 2 stream iterations, got {mock_chat_log._call_count}"
 
 
 @pytest.mark.asyncio
@@ -402,7 +412,9 @@ async def test_realistic_streaming_without_tool_calls(
                     # Verify loop terminated after 1 iteration
                     assert result is not None
                     assert call_count[0] == 1, f"Expected 1 LLM call, got {call_count[0]}"
-                    assert mock_chat_log._call_count == 1, f"Expected 1 stream iteration, got {mock_chat_log._call_count}"
+                    assert (
+                        mock_chat_log._call_count == 1
+                    ), f"Expected 1 stream iteration, got {mock_chat_log._call_count}"
 
 
 @pytest.mark.asyncio

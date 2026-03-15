@@ -64,12 +64,8 @@ async def test_llm_config_without_proxy_headers_env(monkeypatch):
 
     # Verify the config structure
     assert "proxy_headers" in config, "proxy_headers key should be present"
-    assert isinstance(
-        config["proxy_headers"], dict
-    ), "proxy_headers should be a dict"
-    assert (
-        config["proxy_headers"] == {}
-    ), "proxy_headers should be empty when env var not set"
+    assert isinstance(config["proxy_headers"], dict), "proxy_headers should be a dict"
+    assert config["proxy_headers"] == {}, "proxy_headers should be empty when env var not set"
 
 
 @pytest.mark.integration
@@ -114,9 +110,7 @@ async def test_llm_config_with_empty_proxy_headers_env(monkeypatch):
 
     # Verify the config structure
     assert "proxy_headers" in config, "proxy_headers key should be present"
-    assert isinstance(
-        config["proxy_headers"], dict
-    ), "proxy_headers should be a dict"
+    assert isinstance(config["proxy_headers"], dict), "proxy_headers should be a dict"
     assert (
         config["proxy_headers"] == {}
     ), "proxy_headers should be empty when env var is empty string"
@@ -186,9 +180,7 @@ async def test_llm_config_with_valid_proxy_headers_env(
 
     # Verify the config structure
     assert "proxy_headers" in config, "proxy_headers key should be present"
-    assert isinstance(
-        config["proxy_headers"], dict
-    ), "proxy_headers should be a dict"
+    assert isinstance(config["proxy_headers"], dict), "proxy_headers should be a dict"
     assert (
         config["proxy_headers"] == expected_headers
     ), f"proxy_headers should match expected: {expected_headers}"
@@ -262,18 +254,13 @@ async def test_llm_config_with_invalid_json_proxy_headers_env(
 
     # Verify a warning was logged
     assert any(
-        "Failed to parse TEST_LLM_PROXY_HEADERS" in record.message
-        for record in caplog.records
+        "Failed to parse TEST_LLM_PROXY_HEADERS" in record.message for record in caplog.records
     ), "Warning should be logged for invalid JSON"
 
     # Verify the config structure (should still be valid)
     assert "proxy_headers" in config, "proxy_headers key should be present"
-    assert isinstance(
-        config["proxy_headers"], dict
-    ), "proxy_headers should be a dict"
-    assert (
-        config["proxy_headers"] == {}
-    ), "proxy_headers should be empty dict on parse error"
+    assert isinstance(config["proxy_headers"], dict), "proxy_headers should be a dict"
+    assert config["proxy_headers"] == {}, "proxy_headers should be empty dict on parse error"
 
     # Verify other config values are still set correctly
     assert "base_url" in config, "base_url should be present"
@@ -306,9 +293,7 @@ async def test_llm_config_fixture_integration(llm_config: dict[str, Any]):
     assert "proxy_headers" in llm_config, "proxy_headers should be present"
 
     # Verify proxy_headers is a dict (could be empty or populated)
-    assert isinstance(
-        llm_config["proxy_headers"], dict
-    ), "proxy_headers should be a dict"
+    assert isinstance(llm_config["proxy_headers"], dict), "proxy_headers should be a dict"
 
     # Log what we got for debugging (if test fails)
     import logging
@@ -364,8 +349,7 @@ async def test_llm_config_with_json_array_proxy_headers_env(monkeypatch, caplog)
 
     # Verify no warning was logged (it's valid JSON, though wrong type)
     assert not any(
-        "Failed to parse TEST_LLM_PROXY_HEADERS" in record.message
-        for record in caplog.records
+        "Failed to parse TEST_LLM_PROXY_HEADERS" in record.message for record in caplog.records
     ), "No warning should be logged for valid JSON (even if wrong type)"
 
     # Current behavior: proxy_headers will be a list, not a dict
@@ -422,8 +406,7 @@ async def test_proxy_headers_with_whitespace_json(monkeypatch, caplog):
 
     # Verify no warning was logged (whitespace should be valid)
     assert not any(
-        "Failed to parse TEST_LLM_PROXY_HEADERS" in record.message
-        for record in caplog.records
+        "Failed to parse TEST_LLM_PROXY_HEADERS" in record.message for record in caplog.records
     ), "No warning should be logged for valid JSON with whitespace"
 
     # Verify the headers were parsed correctly

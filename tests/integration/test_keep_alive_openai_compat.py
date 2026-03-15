@@ -225,9 +225,9 @@ class TestKeepAliveOpenAICompatibility:
                 call_args = mock_session.post.call_args
                 payload = call_args.kwargs.get("json", {})
 
-                assert "keep_alive" not in payload, (
-                    "keep_alive should NOT be in streaming request to OpenAI"
-                )
+                assert (
+                    "keep_alive" not in payload
+                ), "keep_alive should NOT be in streaming request to OpenAI"
                 assert payload.get("stream") is True
 
             await agent.close()
@@ -270,9 +270,9 @@ class TestKeepAliveOpenAICompatibility:
             call_args = mock_session.post.call_args
             payload = call_args[1]["json"]
 
-            assert "keep_alive" not in payload, (
-                "External LLM tool should NOT send keep_alive to OpenAI"
-            )
+            assert (
+                "keep_alive" not in payload
+            ), "External LLM tool should NOT send keep_alive to OpenAI"
 
         await tool.close()
 
@@ -417,8 +417,8 @@ class TestKeepAliveEdgeCases:
                 payload = mock_session.post.call_args.kwargs.get("json", {})
                 # Local LLM on non-Ollama port should NOT receive keep_alive
                 # because it's likely vLLM, llama.cpp, or another server
-                assert "keep_alive" not in payload, (
-                    "Local LLM server on non-Ollama port should not receive keep_alive"
-                )
+                assert (
+                    "keep_alive" not in payload
+                ), "Local LLM server on non-Ollama port should not receive keep_alive"
 
             await agent.close()

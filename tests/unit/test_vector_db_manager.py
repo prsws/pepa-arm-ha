@@ -302,9 +302,12 @@ async def test_async_setup_registers_state_listeners(mock_hass, mock_chromadb, v
         await manager._ensure_initialized()
 
         # Mock async_track_time_interval
-        with patch(
-            "custom_components.home_agent.vector_db_manager.async_track_time_interval"
-        ) as mock_track_time, patch.object(manager, "async_reindex_all_entities", AsyncMock()):
+        with (
+            patch(
+                "custom_components.home_agent.vector_db_manager.async_track_time_interval"
+            ) as mock_track_time,
+            patch.object(manager, "async_reindex_all_entities", AsyncMock()),
+        ):
             await manager.async_setup()
 
             # Verify state change listener was registered
@@ -326,7 +329,9 @@ async def test_async_setup_handles_chromadb_failure(mock_hass, vector_db_config)
 
         # Make _ensure_initialized raise an error
         with patch.object(
-            manager, "_ensure_initialized", side_effect=ContextInjectionError("ChromaDB unavailable")
+            manager,
+            "_ensure_initialized",
+            side_effect=ContextInjectionError("ChromaDB unavailable"),
         ):
             with pytest.raises(ContextInjectionError, match="ChromaDB unavailable"):
                 await manager.async_setup()
@@ -448,8 +453,9 @@ async def test_embed_with_openai_success(mock_hass, mock_chromadb, vector_db_con
     config[CONF_VECTOR_DB_EMBEDDING_PROVIDER] = EMBEDDING_PROVIDER_OPENAI
     config[CONF_OPENAI_API_KEY] = "test-api-key"
 
-    with patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True), patch(
-        "custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", True
+    with (
+        patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True),
+        patch("custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", True),
     ):
         manager = VectorDBManager(mock_hass, config)
 
@@ -488,8 +494,9 @@ async def test_embed_with_openai_api_error(mock_hass, mock_chromadb, vector_db_c
     config[CONF_VECTOR_DB_EMBEDDING_PROVIDER] = EMBEDDING_PROVIDER_OPENAI
     config[CONF_OPENAI_API_KEY] = "test-api-key"
 
-    with patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True), patch(
-        "custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", True
+    with (
+        patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True),
+        patch("custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", True),
     ):
         manager = VectorDBManager(mock_hass, config)
 
@@ -521,8 +528,9 @@ async def test_embed_with_openai_missing_api_key(mock_hass, mock_chromadb, vecto
     config[CONF_VECTOR_DB_EMBEDDING_PROVIDER] = EMBEDDING_PROVIDER_OPENAI
     # Don't set API key
 
-    with patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True), patch(
-        "custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", True
+    with (
+        patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True),
+        patch("custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", True),
     ):
         manager = VectorDBManager(mock_hass, config)
 
@@ -537,8 +545,9 @@ async def test_embed_with_openai_library_not_available(mock_hass, mock_chromadb,
     config[CONF_VECTOR_DB_EMBEDDING_PROVIDER] = EMBEDDING_PROVIDER_OPENAI
     config[CONF_OPENAI_API_KEY] = "test-api-key"
 
-    with patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True), patch(
-        "custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", False
+    with (
+        patch("custom_components.home_agent.vector_db_manager.CHROMADB_AVAILABLE", True),
+        patch("custom_components.home_agent.vector_db_manager.OPENAI_AVAILABLE", False),
     ):
         manager = VectorDBManager(mock_hass, config)
 
@@ -599,9 +608,7 @@ async def test_embed_with_ollama_timeout(mock_hass, mock_chromadb, vector_db_con
 
         # Mock aiohttp to raise ClientError (which includes timeout errors)
         mock_response = MagicMock()
-        mock_response.__aenter__ = AsyncMock(
-            side_effect=aiohttp.ClientError("Connection timeout")
-        )
+        mock_response.__aenter__ = AsyncMock(side_effect=aiohttp.ClientError("Connection timeout"))
         mock_response.__aexit__ = AsyncMock(return_value=None)
 
         mock_session = MagicMock()
@@ -784,11 +791,14 @@ async def test_async_handle_state_change_triggers_reindex(
             event_data = {"entity_id": "light.living_room"}
             event = Event(EVENT_STATE_CHANGED, event_data)
 
-            with patch(
-                "custom_components.home_agent.vector_db_manager.async_should_expose",
-                mock_async_should_expose,
-            ), patch(
-                "custom_components.home_agent.vector_db_manager.REINDEX_DEBOUNCE_DELAY", 0.05
+            with (
+                patch(
+                    "custom_components.home_agent.vector_db_manager.async_should_expose",
+                    mock_async_should_expose,
+                ),
+                patch(
+                    "custom_components.home_agent.vector_db_manager.REINDEX_DEBOUNCE_DELAY", 0.05
+                ),
             ):
                 # Handle the event
                 manager._async_handle_state_change(event)
@@ -842,11 +852,13 @@ async def test_debounced_reindex_batches_multiple_entities(
 
         await manager._ensure_initialized()
 
-        with patch.object(manager, "async_index_entity", AsyncMock()) as mock_index, patch(
-            "custom_components.home_agent.vector_db_manager.async_should_expose",
-            mock_async_should_expose,
-        ), patch(
-            "custom_components.home_agent.vector_db_manager.REINDEX_DEBOUNCE_DELAY", 0.05
+        with (
+            patch.object(manager, "async_index_entity", AsyncMock()) as mock_index,
+            patch(
+                "custom_components.home_agent.vector_db_manager.async_should_expose",
+                mock_async_should_expose,
+            ),
+            patch("custom_components.home_agent.vector_db_manager.REINDEX_DEBOUNCE_DELAY", 0.05),
         ):
             # Fire multiple state changes rapidly (use exposed entities)
             for entity_id in ["light.living_room", "sensor.temperature", "switch.fan"]:
@@ -871,13 +883,15 @@ async def test_debounced_reindex_handles_error_gracefully(
         await manager._ensure_initialized()
 
         # Make async_index_entity raise an error
-        with patch.object(
-            manager, "async_index_entity", AsyncMock(side_effect=Exception("Index failed"))
-        ), patch(
-            "custom_components.home_agent.vector_db_manager.async_should_expose",
-            mock_async_should_expose,
-        ), patch(
-            "custom_components.home_agent.vector_db_manager.REINDEX_DEBOUNCE_DELAY", 0.05
+        with (
+            patch.object(
+                manager, "async_index_entity", AsyncMock(side_effect=Exception("Index failed"))
+            ),
+            patch(
+                "custom_components.home_agent.vector_db_manager.async_should_expose",
+                mock_async_should_expose,
+            ),
+            patch("custom_components.home_agent.vector_db_manager.REINDEX_DEBOUNCE_DELAY", 0.05),
         ):
             event = Event(EVENT_STATE_CHANGED, {"entity_id": "light.living_room"})
             manager._async_handle_state_change(event)

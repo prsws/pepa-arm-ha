@@ -726,8 +726,7 @@ class TestThinkingBlockFiltering:
     async def test_streaming_multiline_thinking_block(self, handler):
         """Test filtering of multiline thinking blocks."""
         thinking_content = (
-            "<think>\\nStep 1: Analyze the question\\n"
-            "Step 2: Form a response\\n</think>"
+            "<think>\\nStep 1: Analyze the question\\n" "Step 2: Form a response\\n</think>"
         )
         sse_lines = [
             (
@@ -1138,9 +1137,9 @@ class TestThinkingBlockFiltering:
 
         # The "<th" should NOT be lost - it should be yielded since the stream
         # ended and it will never become a complete <think> tag
-        assert full_content == "The result is <th", (
-            f"Buffered content '<th' was lost at stream end. Got: '{full_content}'"
-        )
+        assert (
+            full_content == "The result is <th"
+        ), f"Buffered content '<th' was lost at stream end. Got: '{full_content}'"
 
     @pytest.mark.asyncio
     async def test_streaming_buffer_single_char_at_stream_end(self, handler):
@@ -1177,9 +1176,9 @@ class TestThinkingBlockFiltering:
         full_content = "".join(content_parts)
 
         # The trailing "<" should not be lost
-        assert full_content == "5 < 10 and 10 <", (
-            f"Buffered '<' was lost at stream end. Got: '{full_content}'"
-        )
+        assert (
+            full_content == "5 < 10 and 10 <"
+        ), f"Buffered '<' was lost at stream end. Got: '{full_content}'"
 
     @pytest.mark.asyncio
     async def test_handler_state_does_not_persist_between_iterations(self):
@@ -1287,9 +1286,9 @@ class TestThinkingBlockFiltering:
         # Verify only text content was yielded
         content_parts = [r.get("content", "") for r in results2 if "content" in r]
         full_content = "".join(content_parts)
-        assert full_content == "The light is on.", (
-            f"Second iteration should yield only text content. Got: '{full_content}'"
-        )
+        assert (
+            full_content == "The light is on."
+        ), f"Second iteration should yield only text content. Got: '{full_content}'"
 
     @pytest.mark.asyncio
     async def test_handler_state_cleared_after_tool_finalization(self):
@@ -1344,9 +1343,9 @@ class TestThinkingBlockFiltering:
 
         # Verify tool_calls were yielded exactly once
         tool_call_results = [r for r in results if "tool_calls" in r]
-        assert len(tool_call_results) == 1, (
-            f"Expected exactly 1 tool_calls delta, got {len(tool_call_results)}"
-        )
+        assert (
+            len(tool_call_results) == 1
+        ), f"Expected exactly 1 tool_calls delta, got {len(tool_call_results)}"
 
     @pytest.mark.asyncio
     async def test_handler_state_cleared_at_stream_end_without_finish_reason(self):

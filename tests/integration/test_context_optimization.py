@@ -27,7 +27,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 from homeassistant.core import State
 
-from tests.integration.helpers import setup_entity_states
 from custom_components.home_agent.const import (
     CONF_COMPRESSION_LEVEL,
     CONF_CONTEXT_FORMAT,
@@ -50,6 +49,7 @@ from custom_components.home_agent.context_manager import ContextManager
 from custom_components.home_agent.context_optimizer import ContextOptimizer
 from custom_components.home_agent.exceptions import TokenLimitExceeded
 from custom_components.home_agent.helpers import estimate_tokens
+from tests.integration.helpers import setup_entity_states
 
 
 @pytest.fixture
@@ -378,9 +378,7 @@ async def test_context_optimization_with_long_attributes(
         CONF_LLM_TEMPERATURE: 0.7,
         CONF_LLM_MAX_TOKENS: 500,
         CONF_CONTEXT_MODE: CONTEXT_MODE_DIRECT,
-        CONF_DIRECT_ENTITIES: [
-            entity.entity_id for entity in entity_states_with_long_attributes
-        ],
+        CONF_DIRECT_ENTITIES: [entity.entity_id for entity in entity_states_with_long_attributes],
         CONF_CONTEXT_FORMAT: CONTEXT_FORMAT_JSON,
         CONF_HISTORY_ENABLED: False,
         CONF_EMIT_EVENTS: False,
@@ -422,9 +420,7 @@ async def test_context_optimization_with_long_attributes(
 
         # After removing redundant attributes, should be much smaller
         assert cleaned_tokens < original_tokens
-        assert (
-            cleaned_tokens < 2000
-        ), "Cleaned context should have truncated long attribute values"
+        assert cleaned_tokens < 2000, "Cleaned context should have truncated long attribute values"
 
         # Verify essential attributes are still present
         for entity in cleaned:

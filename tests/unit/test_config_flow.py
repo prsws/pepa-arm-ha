@@ -1008,9 +1008,7 @@ class TestHomeAgentConfigFlow:
         # Verify it's optional (not required) by checking it's a vol.Optional
         import voluptuous as vol
 
-        assert isinstance(
-            api_key_key, vol.Optional
-        ), "API key should be Optional, not Required"
+        assert isinstance(api_key_key, vol.Optional), "API key should be Optional, not Required"
 
     async def test_config_flow_api_key_uses_suggested_value(self):
         """Test that API key uses suggested_value pattern (not default) to allow clearing."""

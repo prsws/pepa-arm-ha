@@ -34,7 +34,9 @@ from custom_components.home_agent.exceptions import (
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_language_switch_between_turns(test_hass, llm_config, session_manager, mock_llm_server):
+async def test_language_switch_between_turns(
+    test_hass, llm_config, session_manager, mock_llm_server
+):
     """Test switching languages mid-conversation.
 
     This test verifies that:
@@ -62,16 +64,13 @@ async def test_language_switch_between_turns(test_hass, llm_config, session_mana
 
     # Add mock responses for language switching test
     mock_llm_server.add_response(
-        "Hello, what time is it",
-        "Hello! I'm your home assistant. I can help with various tasks."
+        "Hello, what time is it", "Hello! I'm your home assistant. I can help with various tasks."
     )
     mock_llm_server.add_response(
-        "Wie ist das Wetter heute",
-        "Ich kann leider keine Wetterinformationen abrufen."
+        "Wie ist das Wetter heute", "Ich kann leider keine Wetterinformationen abrufen."
     )
     mock_llm_server.add_response(
-        "Quelle température fait-il",
-        "Je ne peux pas obtenir d'informations sur la température."
+        "Quelle température fait-il", "Je ne peux pas obtenir d'informations sur la température."
     )
 
     with patch(
@@ -151,14 +150,18 @@ async def test_language_switch_between_turns(test_hass, llm_config, session_mana
 
             # Verify we have user messages in history
             user_messages = [msg for msg in history if msg.get("role") == "user"]
-            assert len(user_messages) >= 1, f"Should have at least 1 user message, got {len(user_messages)}"
+            assert (
+                len(user_messages) >= 1
+            ), f"Should have at least 1 user message, got {len(user_messages)}"
 
             await agent.close()
 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_concurrent_conversations_different_languages(test_hass, llm_config, session_manager, mock_llm_server):
+async def test_concurrent_conversations_different_languages(
+    test_hass, llm_config, session_manager, mock_llm_server
+):
     """Test multiple simultaneous conversations in different languages.
 
     This test verifies that:
@@ -294,7 +297,9 @@ async def test_concurrent_conversations_different_languages(test_hass, llm_confi
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_language_preserved_in_errors(test_hass, llm_config, session_manager, mock_llm_server):
+async def test_language_preserved_in_errors(
+    test_hass, llm_config, session_manager, mock_llm_server
+):
     """Test error responses maintain language setting.
 
     This test verifies that:

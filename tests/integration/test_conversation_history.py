@@ -24,7 +24,9 @@ from custom_components.home_agent.const import (
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_history_persistence(test_hass_with_default_entities, llm_config, session_manager, mock_llm_server):
+async def test_history_persistence(
+    test_hass_with_default_entities, llm_config, session_manager, mock_llm_server
+):
     """Test that conversation history persists and loads correctly.
 
     This test verifies that:
@@ -70,7 +72,9 @@ async def test_history_persistence(test_hass_with_default_entities, llm_config, 
         # Response should be conversational
         response1_lower = response1.lower()
         # Just verify we got some kind of conversational response
-        assert len(response1_lower) > 5, f"Response should be conversational, got: {response1[:200]}"
+        assert (
+            len(response1_lower) > 5
+        ), f"Response should be conversational, got: {response1[:200]}"
 
         test_message2 = "What's the weather like?"
         response2 = await agent1.process_message(
@@ -138,7 +142,9 @@ async def test_history_persistence(test_hass_with_default_entities, llm_config, 
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_history_token_limits(test_hass_with_default_entities, llm_config, session_manager, mock_llm_server):
+async def test_history_token_limits(
+    test_hass_with_default_entities, llm_config, session_manager, mock_llm_server
+):
     """Test that history is truncated when token limits are exceeded.
 
     This test verifies that:
@@ -215,7 +221,9 @@ async def test_history_token_limits(test_hass_with_default_entities, llm_config,
 @pytest.mark.integration
 @pytest.mark.asyncio
 @pytest.mark.timeout(120)  # Extended timeout for multiple LLM calls
-async def test_history_message_limits(test_hass_with_default_entities, llm_config, session_manager, mock_llm_server):
+async def test_history_message_limits(
+    test_hass_with_default_entities, llm_config, session_manager, mock_llm_server
+):
     """Test that history respects message count limits.
 
     This test verifies that:
@@ -294,7 +302,9 @@ async def test_history_message_limits(test_hass_with_default_entities, llm_confi
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_history_disabled(test_hass_with_default_entities, llm_config, session_manager, mock_llm_server):
+async def test_history_disabled(
+    test_hass_with_default_entities, llm_config, session_manager, mock_llm_server
+):
     """Test that history is not maintained when disabled.
 
     This test verifies that:

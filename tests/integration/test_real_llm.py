@@ -26,7 +26,6 @@ import pytest
 from homeassistant.const import ATTR_ENTITY_ID
 
 from custom_components.home_agent.agent import HomeAgent
-from custom_components.home_agent.helpers import strip_thinking_blocks
 from custom_components.home_agent.const import (
     CONF_DEBUG_LOGGING,
     CONF_EMIT_EVENTS,
@@ -42,6 +41,7 @@ from custom_components.home_agent.const import (
     CONF_STREAMING_ENABLED,
     CONF_TOOLS_MAX_CALLS_PER_TURN,
 )
+from custom_components.home_agent.helpers import strip_thinking_blocks
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -239,7 +239,9 @@ async def test_tool_calling(
             # With mocks, we expect tool calls; with real LLM, just verify response exists
             if is_using_mock_llm:
                 # Mock is configured to return tool call for "turn on...living room light"
-                assert len(service_calls) > 0, f"Mock should trigger tool calls. Response: {response}"
+                assert (
+                    len(service_calls) > 0
+                ), f"Mock should trigger tool calls. Response: {response}"
                 turn_on_called = any(call.get("service") == "turn_on" for call in service_calls)
                 assert turn_on_called, f"turn_on service should be called. Calls: {service_calls}"
             # For real LLM, just check we got a response (already verified above)
@@ -601,7 +603,18 @@ async def test_llm_with_complex_tools(
                 # Response should mention temperature or heating action (the query asked about temperature)
                 response_lower = response.lower()
                 assert any(
-                    word in response_lower for word in ["temperature", "72", "70", "degrees", "thermostat", "heat", "warm", "climate", "turn"]
+                    word in response_lower
+                    for word in [
+                        "temperature",
+                        "72",
+                        "70",
+                        "degrees",
+                        "thermostat",
+                        "heat",
+                        "warm",
+                        "climate",
+                        "turn",
+                    ]
                 ), f"Response doesn't mention temperature or heating info: {response[:300]}"
 
             await agent.close()
@@ -733,7 +746,9 @@ async def test_tool_execution_with_correct_entity(
             # With mocks, verify entity targeting; with real LLM, just verify response exists
             if is_using_mock_llm:
                 # Check if service was called (LLM may or may not call the tool)
-                bedroom_calls = [call for call in service_calls if call.get("entity_id") == "light.bedroom"]
+                bedroom_calls = [
+                    call for call in service_calls if call.get("entity_id") == "light.bedroom"
+                ]
                 living_room_calls = [
                     call for call in service_calls if call.get("entity_id") == "light.living_room"
                 ]
@@ -811,8 +826,18 @@ async def test_tool_execution_with_correct_entity(
                 # Response should acknowledge the temperature query
                 response_lower = response3.lower()
                 valid_response_patterns = [
-                    "temperature", "72", "sensor", "degrees", "check",
-                    "let me", "look", "see", "finding", "living", "room", "current",
+                    "temperature",
+                    "72",
+                    "sensor",
+                    "degrees",
+                    "check",
+                    "let me",
+                    "look",
+                    "see",
+                    "finding",
+                    "living",
+                    "room",
+                    "current",
                 ]
                 assert any(
                     word in response_lower for word in valid_response_patterns

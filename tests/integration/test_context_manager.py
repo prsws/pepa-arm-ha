@@ -158,9 +158,7 @@ async def test_context_mode_switching_vector_db(
         agent.context_manager, "_get_mode_from_config"
     ), "Context manager should have _get_mode_from_config method"
     context_mode = agent.context_manager._get_mode_from_config()
-    assert (
-        context_mode == CONTEXT_MODE_VECTOR_DB
-    ), f"Expected vector_db mode, got {context_mode}"
+    assert context_mode == CONTEXT_MODE_VECTOR_DB, f"Expected vector_db mode, got {context_mode}"
 
     # Get context to verify it works
     context = await agent.context_manager.get_context(

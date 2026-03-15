@@ -68,10 +68,14 @@ async def test_memory_added_to_vectordb(
     }
 
     # Mock entity exposure
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), patch("chromadb.HttpClient", return_value=mock_chromadb_client), mock_embedding_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        patch("chromadb.HttpClient", return_value=mock_chromadb_client),
+        mock_embedding_server.patch_aiohttp(),
+    ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
         vector_db_manager = VectorDBManager(test_hass, vector_config)
@@ -181,10 +185,14 @@ async def test_memory_semantic_search_retrieval(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), patch("chromadb.HttpClient", return_value=mock_chromadb_client), mock_embedding_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        patch("chromadb.HttpClient", return_value=mock_chromadb_client),
+        mock_embedding_server.patch_aiohttp(),
+    ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
         vector_db_manager = VectorDBManager(test_hass, vector_config)
@@ -314,10 +322,14 @@ async def test_memory_metadata_integrity(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), patch("chromadb.HttpClient", return_value=mock_chromadb_client), mock_embedding_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        patch("chromadb.HttpClient", return_value=mock_chromadb_client),
+        mock_embedding_server.patch_aiohttp(),
+    ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
         vector_db_manager = VectorDBManager(test_hass, vector_config)
@@ -443,10 +455,14 @@ async def test_memory_update_syncs_to_vectordb(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), patch("chromadb.HttpClient", return_value=mock_chromadb_client), mock_embedding_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        patch("chromadb.HttpClient", return_value=mock_chromadb_client),
+        mock_embedding_server.patch_aiohttp(),
+    ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
         vector_db_manager = VectorDBManager(test_hass, vector_config)
@@ -555,10 +571,14 @@ async def test_memory_deletion_removes_from_vectordb(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), patch("chromadb.HttpClient", return_value=mock_chromadb_client), mock_embedding_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        patch("chromadb.HttpClient", return_value=mock_chromadb_client),
+        mock_embedding_server.patch_aiohttp(),
+    ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
         vector_db_manager = VectorDBManager(test_hass, vector_config)
@@ -659,10 +679,14 @@ async def test_memory_vectordb_cross_query_relevance(
         CONF_VECTOR_DB_EMBEDDING_BASE_URL: embedding_config["base_url"],
     }
 
-    with patch(
-        "custom_components.home_agent.vector_db_manager.async_should_expose",
-        return_value=False,
-    ), patch("chromadb.HttpClient", return_value=mock_chromadb_client), mock_embedding_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.vector_db_manager.async_should_expose",
+            return_value=False,
+        ),
+        patch("chromadb.HttpClient", return_value=mock_chromadb_client),
+        mock_embedding_server.patch_aiohttp(),
+    ):
         test_hass.states.async_all = MagicMock(return_value=[])
 
         vector_db_manager = VectorDBManager(test_hass, vector_config)

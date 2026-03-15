@@ -99,9 +99,7 @@ class TestThinkingBlocksNonStreaming:
     """Test thinking block filtering in non-streaming responses."""
 
     @pytest.mark.asyncio
-    async def test_thinking_blocks_filtered_from_response(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_thinking_blocks_filtered_from_response(self, agent, mock_hass, user_input):
         """Test that thinking blocks are stripped from LLM responses."""
         mock_response = {
             "choices": [
@@ -127,9 +125,7 @@ class TestThinkingBlocksNonStreaming:
         assert "turn on the light" in response_text.lower()
 
     @pytest.mark.asyncio
-    async def test_only_thinking_block_response_handled(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_only_thinking_block_response_handled(self, agent, mock_hass, user_input):
         """Test response that is only a thinking block."""
         mock_response = {
             "choices": [
@@ -153,9 +149,7 @@ class TestThinkingBlocksNonStreaming:
         assert "<think>" not in response_text
 
     @pytest.mark.asyncio
-    async def test_multiline_thinking_blocks_filtered(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_multiline_thinking_blocks_filtered(self, agent, mock_hass, user_input):
         """Test that multiline thinking blocks are properly filtered."""
         mock_response = {
             "choices": [
@@ -184,9 +178,7 @@ Step 3: Execute the action
         assert "living room light" in response_text.lower()
 
     @pytest.mark.asyncio
-    async def test_multiple_thinking_blocks_filtered(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_multiple_thinking_blocks_filtered(self, agent, mock_hass, user_input):
         """Test that multiple thinking blocks are all filtered."""
         mock_response = {
             "choices": [
@@ -216,9 +208,7 @@ class TestThinkingBlocksUnicode:
     """Test thinking blocks with unicode/multilingual content."""
 
     @pytest.mark.asyncio
-    async def test_chinese_thinking_blocks_filtered(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_chinese_thinking_blocks_filtered(self, agent, mock_hass, user_input):
         """Test Chinese content in thinking blocks is filtered."""
         mock_response = {
             "choices": [
@@ -242,9 +232,7 @@ class TestThinkingBlocksUnicode:
         assert "答案是42" in response_text
 
     @pytest.mark.asyncio
-    async def test_emoji_in_thinking_blocks_filtered(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_emoji_in_thinking_blocks_filtered(self, agent, mock_hass, user_input):
         """Test emojis in thinking blocks are filtered."""
         mock_response = {
             "choices": [
@@ -290,9 +278,7 @@ class TestThinkingBlocksEdgeCases:
     """Test edge cases for thinking block handling."""
 
     @pytest.mark.asyncio
-    async def test_malformed_thinking_tags_preserved(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_malformed_thinking_tags_preserved(self, agent, mock_hass, user_input):
         """Test that malformed thinking tags are handled gracefully."""
         # Unclosed tag - should be preserved
         mock_response = {
@@ -343,9 +329,7 @@ class TestThinkingBlocksEdgeCases:
         assert "lowercase removed" not in response_text
 
     @pytest.mark.asyncio
-    async def test_thinking_blocks_with_json_content(
-        self, agent, mock_hass, user_input
-    ):
+    async def test_thinking_blocks_with_json_content(self, agent, mock_hass, user_input):
         """Test thinking blocks containing JSON are properly handled."""
         mock_response = {
             "choices": [

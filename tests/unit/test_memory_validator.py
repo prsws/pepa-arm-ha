@@ -363,7 +363,10 @@ class TestBatchValidation:
         """Test that validate_batch returns a list of results."""
         validator = MemoryValidator()
         memories = [
-            {"content": "User prefers keeping bedroom temperature around 68 degrees overnight for sleeping comfortably", "importance": 0.8},
+            {
+                "content": "User prefers keeping bedroom temperature around 68 degrees overnight for sleeping comfortably",
+                "importance": 0.8,
+            },
             {"content": "Light is on", "importance": 0.5},
         ]
         results = validator.validate_batch(memories)
@@ -374,9 +377,15 @@ class TestBatchValidation:
         """Test that batch validation returns correct results."""
         validator = MemoryValidator()
         memories = [
-            {"content": "User prefers keeping bedroom temperature around exactly 68 degrees overnight for sleeping comfortably", "importance": 0.8},
+            {
+                "content": "User prefers keeping bedroom temperature around exactly 68 degrees overnight for sleeping comfortably",
+                "importance": 0.8,
+            },
             {"content": "Light is on", "importance": 0.5},
-            {"content": "There is no sensor installed anywhere inside the bedroom area for monitoring the temperature accurately", "importance": 0.8},
+            {
+                "content": "There is no sensor installed anywhere inside the bedroom area for monitoring the temperature accurately",
+                "importance": 0.8,
+            },
         ]
         results = validator.validate_batch(memories)
 
@@ -398,7 +407,10 @@ class TestValidationStatistics:
         """Test that validation stats has correct structure."""
         validator = MemoryValidator()
         memories = [
-            {"content": "User prefers keeping bedroom temperature around exactly 68 degrees overnight for sleeping comfortably", "importance": 0.8},
+            {
+                "content": "User prefers keeping bedroom temperature around exactly 68 degrees overnight for sleeping comfortably",
+                "importance": 0.8,
+            },
             {"content": "Light on", "importance": 0.5},
         ]
         stats = validator.get_validation_stats(memories)
@@ -412,9 +424,15 @@ class TestValidationStatistics:
         """Test that validation stats counts are correct."""
         validator = MemoryValidator()
         memories = [
-            {"content": "User prefers keeping bedroom temperature around exactly 68 degrees overnight for sleeping comfortably", "importance": 0.8},
+            {
+                "content": "User prefers keeping bedroom temperature around exactly 68 degrees overnight for sleeping comfortably",
+                "importance": 0.8,
+            },
             {"content": "Light on", "importance": 0.5},  # Too short
-            {"content": "There is no sensor installed anywhere inside bedroom area currently", "importance": 0.8},  # Low value
+            {
+                "content": "There is no sensor installed anywhere inside bedroom area currently",
+                "importance": 0.8,
+            },  # Low value
         ]
         stats = validator.get_validation_stats(memories)
 
@@ -428,7 +446,10 @@ class TestValidationStatistics:
         memories = [
             {"content": "Short", "importance": 0.8},  # Too short
             {"content": "Also short here", "importance": 0.8},  # Too short
-            {"content": "We discussed the temperature settings multiple times during our conversation today afternoon session", "importance": 0.8},  # Pattern
+            {
+                "content": "We discussed the temperature settings multiple times during our conversation today afternoon session",
+                "importance": 0.8,
+            },  # Pattern
         ]
         stats = validator.get_validation_stats(memories)
 
@@ -521,7 +542,9 @@ class TestExpandedTransientPatterns:
         ]
 
         for content in weather_patterns:
-            assert validator.is_transient_state(content), f"Should detect weather pattern: {content}"
+            assert validator.is_transient_state(
+                content
+            ), f"Should detect weather pattern: {content}"
 
     def test_detects_current_day_patterns(self):
         """Test detection of current date/day patterns."""
@@ -551,7 +574,9 @@ class TestExpandedTransientPatterns:
         ]
 
         for content in presence_patterns:
-            assert validator.is_transient_state(content), f"Should detect presence pattern: {content}"
+            assert validator.is_transient_state(
+                content
+            ), f"Should detect presence pattern: {content}"
 
     def test_allows_permanent_date_facts(self):
         """Test that permanent date facts are NOT flagged as transient."""
@@ -565,7 +590,9 @@ class TestExpandedTransientPatterns:
         ]
 
         for content in permanent_facts:
-            assert not validator.is_transient_state(content), f"Should NOT flag permanent fact: {content}"
+            assert not validator.is_transient_state(
+                content
+            ), f"Should NOT flag permanent fact: {content}"
 
     def test_allows_weather_preferences(self):
         """Test that weather preferences are NOT flagged as transient."""
@@ -577,13 +604,17 @@ class TestExpandedTransientPatterns:
         ]
 
         for content in preferences:
-            assert not validator.is_transient_state(content), f"Should NOT flag preference: {content}"
+            assert not validator.is_transient_state(
+                content
+            ), f"Should NOT flag preference: {content}"
 
     def test_detects_at_the_moment_pattern(self):
         """Test detection of 'at the moment' temporal pattern."""
         validator = MemoryValidator()
         assert validator.is_transient_state("At the moment the lights are dimmed to 50 percent")
-        assert validator.is_transient_state("Right now the temperature is comfortable at 72 degrees")
+        assert validator.is_transient_state(
+            "Right now the temperature is comfortable at 72 degrees"
+        )
 
     def test_full_validation_with_new_patterns(self):
         """Test full memory validation with the new transient patterns."""
@@ -591,10 +622,22 @@ class TestExpandedTransientPatterns:
 
         # These should be rejected by full validation
         transient_memories = [
-            {"content": "The current time is 10:29 PM according to the system clock in the living room area", "importance": 0.8},
-            {"content": "It's raining outside right now so all the windows should be kept closed properly", "importance": 0.7},
-            {"content": "User is currently at home working from the office area on important projects", "importance": 0.6},
-            {"content": "Today is Wednesday and the weekly garbage collection schedule is starting soon", "importance": 0.5},
+            {
+                "content": "The current time is 10:29 PM according to the system clock in the living room area",
+                "importance": 0.8,
+            },
+            {
+                "content": "It's raining outside right now so all the windows should be kept closed properly",
+                "importance": 0.7,
+            },
+            {
+                "content": "User is currently at home working from the office area on important projects",
+                "importance": 0.6,
+            },
+            {
+                "content": "Today is Wednesday and the weekly garbage collection schedule is starting soon",
+                "importance": 0.5,
+            },
         ]
 
         for memory in transient_memories:
@@ -604,11 +647,22 @@ class TestExpandedTransientPatterns:
 
         # These should be accepted
         valid_memories = [
-            {"content": "User's birthday is on September 28th and they want special lighting for celebrations", "importance": 0.9},
-            {"content": "User prefers the bedroom temperature at 68 degrees Fahrenheit for comfortable sleeping", "importance": 0.8},
-            {"content": "User works night shifts from Monday to Friday and prefers to sleep during daytime", "importance": 0.7},
+            {
+                "content": "User's birthday is on September 28th and they want special lighting for celebrations",
+                "importance": 0.9,
+            },
+            {
+                "content": "User prefers the bedroom temperature at 68 degrees Fahrenheit for comfortable sleeping",
+                "importance": 0.8,
+            },
+            {
+                "content": "User works night shifts from Monday to Friday and prefers to sleep during daytime",
+                "importance": 0.7,
+            },
         ]
 
         for memory in valid_memories:
             is_valid, reason = validator.validate(memory)
-            assert is_valid, f"Should accept valid memory: {memory['content']}, rejected with: {reason}"
+            assert (
+                is_valid
+            ), f"Should accept valid memory: {memory['content']}, rejected with: {reason}"

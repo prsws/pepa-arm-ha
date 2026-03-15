@@ -70,12 +70,17 @@ async def test_unicode_handling_per_language(
     }
 
     # Set default mock response for the LLM
-    mock_llm_server.default_response = "I understand your request. The message was received successfully."
+    mock_llm_server.default_response = (
+        "I understand your request. The message was received successfully."
+    )
 
-    with patch(
-        "custom_components.home_agent.agent.core.async_should_expose",
-        return_value=False,
-    ), mock_llm_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.agent.core.async_should_expose",
+            return_value=False,
+        ),
+        mock_llm_server.patch_aiohttp(),
+    ):
         agent = HomeAgent(test_hass, config, session_manager)
 
         # Send message with unicode characters
@@ -145,10 +150,13 @@ async def test_streaming_with_multilingual(test_hass, llm_config, session_manage
     # Set default mock response (used for both German and Spanish)
     mock_llm_server.default_response = "Das Wetter heute ist schön und sonnig."
 
-    with patch(
-        "custom_components.home_agent.agent.core.async_should_expose",
-        return_value=False,
-    ), mock_llm_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.agent.core.async_should_expose",
+            return_value=False,
+        ),
+        mock_llm_server.patch_aiohttp(),
+    ):
         agent = HomeAgent(test_hass, config, session_manager)
 
         # Test German with streaming
@@ -226,10 +234,13 @@ async def test_tool_execution_language_agnostic(
     # Set default mock response for German tool request
     mock_llm_server.default_response = "Natürlich! Ich habe das Wohnzimmerlicht eingeschaltet."
 
-    with patch(
-        "custom_components.home_agent.agent.core.async_should_expose",
-        return_value=False,
-    ), mock_llm_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.agent.core.async_should_expose",
+            return_value=False,
+        ),
+        mock_llm_server.patch_aiohttp(),
+    ):
         # Setup test states
         test_hass.states.async_all = MagicMock(return_value=sample_entity_states)
 
@@ -307,7 +318,9 @@ async def test_tool_execution_language_agnostic(
 
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_empty_conversation_preserves_language(test_hass, llm_config, session_manager, mock_llm_server):
+async def test_empty_conversation_preserves_language(
+    test_hass, llm_config, session_manager, mock_llm_server
+):
     """Test language preservation with minimal interaction.
 
     This test verifies that:
@@ -330,10 +343,13 @@ async def test_empty_conversation_preserves_language(test_hass, llm_config, sess
     # Set default mock response for minimal messages
     mock_llm_server.default_response = "Bonjour! Comment puis-je vous aider?"
 
-    with patch(
-        "custom_components.home_agent.agent.core.async_should_expose",
-        return_value=False,
-    ), mock_llm_server.patch_aiohttp():
+    with (
+        patch(
+            "custom_components.home_agent.agent.core.async_should_expose",
+            return_value=False,
+        ),
+        mock_llm_server.patch_aiohttp(),
+    ):
         agent = HomeAgent(test_hass, config, session_manager)
 
         # Test 1: Very short message in French

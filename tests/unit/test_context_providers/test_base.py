@@ -152,7 +152,9 @@ class TestGetEntityState:
         assert result is not None
         assert result["entity_id"] == "light.living_room"
         assert result["state"] == "on"
-        assert result["attributes"]["brightness_pct"] == int(128 / 255 * 100)  # Converted from brightness
+        assert result["attributes"]["brightness_pct"] == int(
+            128 / 255 * 100
+        )  # Converted from brightness
         assert result["attributes"]["friendly_name"] == "Living Room Light"
         mock_hass.states.get.assert_called_once_with("light.living_room")
 
@@ -186,7 +188,9 @@ class TestGetEntityState:
         )
 
         assert result is not None
-        assert result["attributes"]["brightness_pct"] == int(128 / 255 * 100)  # Converted from brightness
+        assert result["attributes"]["brightness_pct"] == int(
+            128 / 255 * 100
+        )  # Converted from brightness
         assert result["attributes"]["color_temp"] == 370
         assert "friendly_name" not in result["attributes"]
         assert "other_attr" not in result["attributes"]
@@ -237,7 +241,9 @@ class TestGetEntityState:
 
         assert result is not None
         assert "nonexistent" not in result["attributes"]
-        assert result["attributes"]["brightness_pct"] == int(128 / 255 * 100)  # Converted from brightness
+        assert result["attributes"]["brightness_pct"] == int(
+            128 / 255 * 100
+        )  # Converted from brightness
 
 
 class TestGetEntitiesMatchingPattern:

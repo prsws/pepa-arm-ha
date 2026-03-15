@@ -16,7 +16,6 @@ from typing import TYPE_CHECKING, Any, Callable, Sequence, cast
 import aiohttp
 import homeassistant.helpers.httpx_client
 import httpx
-
 from homeassistant.components import conversation as ha_conversation
 from homeassistant.components.homeassistant.exposed_entities import async_should_expose
 from homeassistant.const import EVENT_STATE_CHANGED
@@ -27,7 +26,6 @@ if TYPE_CHECKING:
     from chromadb.api import ClientAPI
     from chromadb.api.models.Collection import Collection
 
-from .helpers import render_template_value
 from .const import (
     CONF_EMBEDDING_KEEP_ALIVE,
     CONF_OPENAI_API_KEY,
@@ -53,7 +51,7 @@ from .const import (
     EMBEDDING_PROVIDER_OPENAI,
 )
 from .exceptions import ContextInjectionError
-from .helpers import retry_async
+from .helpers import render_template_value, retry_async
 
 # Conditional imports for ChromaDB
 try:
@@ -122,9 +120,7 @@ class VectorDBManager:
         self.embedding_base_url = config.get(
             CONF_VECTOR_DB_EMBEDDING_BASE_URL, DEFAULT_VECTOR_DB_EMBEDDING_BASE_URL
         )
-        self.openai_api_key = render_template_value(
-            hass, config.get(CONF_OPENAI_API_KEY, "")
-        )
+        self.openai_api_key = render_template_value(hass, config.get(CONF_OPENAI_API_KEY, ""))
 
         # State
         self._client: ClientAPI | None = None
@@ -418,9 +414,7 @@ class VectorDBManager:
 
         # Schedule debounced batch reindex if not already scheduled
         if self._reindex_task is None or self._reindex_task.done():
-            self._reindex_task = asyncio.create_task(
-                self._async_debounced_reindex()
-            )
+            self._reindex_task = asyncio.create_task(self._async_debounced_reindex())
 
     async def _async_debounced_reindex(self) -> None:
         """Process pending reindex requests after debounce delay."""
@@ -698,9 +692,7 @@ class VectorDBManager:
     async def _ensure_aiohttp_session(self) -> aiohttp.ClientSession:
         """Ensure aiohttp session exists for Ollama requests."""
         if self._aiohttp_session is None or self._aiohttp_session.closed:
-            self._aiohttp_session = aiohttp.ClientSession(
-                timeout=aiohttp.ClientTimeout(total=30)
-            )
+            self._aiohttp_session = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=30))
         return self._aiohttp_session
 
     async def _embed_with_ollama(self, text: str) -> list[float]:

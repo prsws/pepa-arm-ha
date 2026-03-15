@@ -272,7 +272,9 @@ class TestHomeAssistantQueryTool:
         assert "last_changed" in formatted
         assert "last_updated" in formatted
         assert "attributes" in formatted
-        assert formatted["attributes"]["brightness_pct"] == int(128 / 255 * 100)  # Converted from brightness
+        assert formatted["attributes"]["brightness_pct"] == int(
+            128 / 255 * 100
+        )  # Converted from brightness
 
     def test_format_entity_state_with_attribute_filter(self, mock_hass, sample_light_state):
         """Test formatting entity state with attribute filter."""

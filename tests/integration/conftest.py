@@ -41,6 +41,7 @@ def disable_thinking_for_tests():
     ):
         yield
 
+
 # Session-scoped health check cache
 _health_check_cache: dict[str, bool] = {}
 
@@ -337,6 +338,7 @@ def test_hass_with_default_entities(test_hass, sample_entity_states) -> HomeAssi
     For custom entity sets, use test_hass + setup_entity_states() instead.
     """
     from tests.integration.helpers import setup_entity_states
+
     setup_entity_states(test_hass, sample_entity_states)
     return test_hass
 
@@ -398,7 +400,7 @@ def mock_entity_exposure():
     """
     with patch(
         "homeassistant.components.homeassistant.exposed_entities.async_should_expose",
-        return_value=True  # Return True to expose all entities
+        return_value=True,  # Return True to expose all entities
     ):
         yield
 
@@ -543,7 +545,9 @@ async def skip_if_services_unavailable(
         if cache_key in _health_check_cache:
             is_healthy = _health_check_cache[cache_key]
         else:
-            is_healthy = await check_chromadb_health(chromadb_config["host"], chromadb_config["port"])
+            is_healthy = await check_chromadb_health(
+                chromadb_config["host"], chromadb_config["port"]
+            )
             _health_check_cache[cache_key] = is_healthy
 
         request.node._service_status["chromadb"] = is_healthy  # type: ignore[attr-defined]
@@ -596,12 +600,10 @@ def pytest_configure(config: Any) -> None:
     # Add filterwarnings to suppress asyncio task destruction messages
     # Instead of hijacking stderr globally, use pytest's built-in filtering
     config.addinivalue_line(
-        "filterwarnings",
-        "ignore::pytest.PytestUnraisableExceptionWarning:_pytest"
+        "filterwarnings", "ignore::pytest.PytestUnraisableExceptionWarning:_pytest"
     )
     config.addinivalue_line(
-        "filterwarnings",
-        "ignore:Task was destroyed but it is pending:ResourceWarning"
+        "filterwarnings", "ignore:Task was destroyed but it is pending:ResourceWarning"
     )
 
     # Suppress "Task was destroyed but it is pending" errors from loggers
