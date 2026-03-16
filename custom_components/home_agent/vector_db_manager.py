@@ -126,6 +126,8 @@ class VectorDBManager:
         self._client: ClientAPI | None = None
         self._collection: Collection | None = None
         self._embedding_cache: OrderedDict[str, list[float]] = OrderedDict()
+        # Tracks entity_id → cache_key so we can evict stale entries on state change
+        self._entity_cache_keys: dict[str, str] = {}
         self._indexing_lock = asyncio.Lock()
         self._state_listener: Callable[[], None] | None = None
         self._maintenance_listener: Callable[[], None] | None = None
@@ -211,6 +213,7 @@ class VectorDBManager:
         self._pending_reindex.clear()
 
         self._embedding_cache.clear()
+        self._entity_cache_keys.clear()
 
         # Close shared HTTP clients
         if self._aiohttp_session is not None:
@@ -313,8 +316,8 @@ class VectorDBManager:
             # Create text representation for embedding
             text = self._create_entity_text(state)
 
-            # Generate embedding
-            embedding = await self._embed_text(text)
+            # Generate embedding (pass entity_id for cache eviction)
+            embedding = await self._embed_text(text, entity_id=entity_id)
 
             # Store in ChromaDB
             metadata = {
@@ -363,6 +366,11 @@ class VectorDBManager:
             assert self._collection is not None
             collection = self._collection
             await self.hass.async_add_executor_job(lambda: collection.delete(ids=[entity_id]))
+
+            # Clean up embedding cache entry for this entity
+            old_key = self._entity_cache_keys.pop(entity_id, None)
+            if old_key is not None:
+                self._embedding_cache.pop(old_key, None)
 
             _LOGGER.debug("Removed entity from index: %s", entity_id)
 
@@ -608,11 +616,15 @@ class VectorDBManager:
             except Exception as err:
                 raise ContextInjectionError(f"Failed to access collection: {err}") from err
 
-    async def _embed_text(self, text: str) -> list[float]:
+    async def _embed_text(self, text: str, entity_id: str | None = None) -> list[float]:
         """Embed text using configured embedding model.
 
         Args:
             text: Text to embed
+            entity_id: Optional entity ID to enable per-entity cache eviction.
+                When provided, any previous cache entry for this entity is
+                removed before inserting the new one, preventing stale entries
+                from accumulating when entity state changes.
 
         Returns:
             Embedding vector
@@ -620,7 +632,17 @@ class VectorDBManager:
         cache_key = hashlib.md5(text.encode()).hexdigest()
         if cache_key in self._embedding_cache:
             self._embedding_cache.move_to_end(cache_key)
+            # Update entity→key mapping even on cache hit (idempotent)
+            if entity_id is not None:
+                self._entity_cache_keys[entity_id] = cache_key
             return self._embedding_cache[cache_key]
+
+        # Evict the previous cache entry for this entity (stale state text)
+        if entity_id is not None:
+            old_key = self._entity_cache_keys.get(entity_id)
+            if old_key is not None and old_key != cache_key:
+                self._embedding_cache.pop(old_key, None)
+            self._entity_cache_keys[entity_id] = cache_key
 
         try:
             embedding: list[float]
