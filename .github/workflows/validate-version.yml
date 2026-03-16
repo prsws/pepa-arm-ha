@@ -38,7 +38,7 @@ jobs:
       - name: Validate manifest.json and const.py versions match
         run: |
           MANIFEST_VERSION=$(jq -r '.version' custom_components/home_agent/manifest.json)
-          CONST_VERSION=$(grep -oP 'VERSION:\s*Final\s*=\s*"\K[^"]+' custom_components/home_agent/const.py)
+          CONST_VERSION=$(grep -oP '^VERSION:\s*Final\s*=\s*"\K[^"]+' custom_components/home_agent/const.py)
 
           echo "manifest.json version: $MANIFEST_VERSION"
           echo "const.py version:      $CONST_VERSION"

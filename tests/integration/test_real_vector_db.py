@@ -456,3 +456,95 @@ class TestRealVectorDB:
 
         finally:
             await manager.async_shutdown()
+
+    @pytest.mark.asyncio
+    async def test_entity_state_change_evicts_stale_cache(
+        self,
+        mock_hass_integration,
+        embedding_config,
+        test_collection_name,
+        sample_entity_states,
+    ):
+        """Test that re-indexing an entity after state change evicts stale cache.
+
+        This validates the fix for the memory leak (issue #111) where the
+        embedding cache keyed by MD5(text) accumulated stale entries for
+        frequently-changing entities, because each state change produced a
+        new cache key while the old one was never removed.
+
+        Verifies:
+        - After state change, cache contains only 1 entry per entity
+        - Old stale embedding is evicted from cache
+        - ChromaDB document is updated (no duplicates)
+        - New embedding is generated (cache miss on new text)
+        """
+        from homeassistant.core import State
+
+        config = {
+            "vector_db_host": embedding_config["host"],
+            "vector_db_port": embedding_config["port"],
+            "vector_db_collection": test_collection_name,
+            "vector_db_embedding_model": embedding_config["model"],
+            "vector_db_embedding_provider": embedding_config["provider"],
+            "vector_db_embedding_base_url": embedding_config["base_url"],
+        }
+
+        mock_hass_integration.states.async_all.return_value = sample_entity_states
+        mock_hass_integration.states.get.side_effect = lambda entity_id: next(
+            (s for s in sample_entity_states if s.entity_id == entity_id), None
+        )
+
+        manager = VectorDBManager(mock_hass_integration, config)
+
+        try:
+            await manager.async_setup()
+            if manager._initial_index_task:
+                await manager._initial_index_task
+
+            # Record cache size after initial indexing
+            initial_cache_size = len(manager._embedding_cache)
+            initial_entity_keys = len(manager._entity_cache_keys)
+            assert initial_cache_size > 0, "Cache should be populated after indexing"
+            assert (
+                initial_entity_keys == initial_cache_size
+            ), "Each cached embedding should have an entity key mapping"
+
+            # Simulate state change: light.living_room goes from "on" to "off"
+            updated_state = State(
+                "light.living_room",
+                "off",
+                {"brightness": 0, "friendly_name": "Living Room Light"},
+            )
+
+            def new_get_state(entity_id):
+                if entity_id == "light.living_room":
+                    return updated_state
+                return next(
+                    (s for s in sample_entity_states if s.entity_id == entity_id),
+                    None,
+                )
+
+            mock_hass_integration.states.get.side_effect = new_get_state
+
+            # Re-index the changed entity
+            await manager.async_index_entity("light.living_room")
+
+            # Cache size should NOT grow — old entry for this entity was evicted
+            assert len(manager._embedding_cache) == initial_cache_size, (
+                f"Cache grew from {initial_cache_size} to "
+                f"{len(manager._embedding_cache)} — stale entry not evicted"
+            )
+            assert len(manager._entity_cache_keys) == initial_entity_keys
+
+            # Verify ChromaDB has no duplicates
+            collection = manager._collection
+            result = await mock_hass_integration.async_add_executor_job(lambda: collection.get())
+            living_room_ids = [eid for eid in result["ids"] if eid == "light.living_room"]
+            assert len(living_room_ids) == 1, "Should have exactly one entry"
+
+            # Verify metadata reflects the updated state
+            idx = result["ids"].index("light.living_room")
+            assert result["metadatas"][idx]["state"] == "off"
+
+        finally:
+            await manager.async_shutdown()
