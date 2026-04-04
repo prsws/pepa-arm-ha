@@ -321,7 +321,7 @@ After migration, verify:
    ```
 3. Test explicitly:
    ```yaml
-   service: home_agent.execute_tool
+   service: pepa_arm_ha.execute_tool
    data:
      tool_name: query_external_llm
      parameters:

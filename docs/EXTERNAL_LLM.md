@@ -345,7 +345,7 @@ automation:
   - alias: "Log External LLM Usage"
     trigger:
       - platform: event
-        event_type: home_agent.tool.executed
+        event_type: pepa_arm_ha.tool.executed
         event_data:
           tool_name: query_external_llm
     action:

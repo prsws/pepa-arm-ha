@@ -1,14 +1,17 @@
-# Home Agent
+# Pepa Automation/Sensory Arm - AI4Aging.org
 
-[![Version](https://img.shields.io/badge/version-0.9.4-blue.svg)](https://github.com/aradlein/hass-agent-llm/releases)
-[![Build Status](https://github.com/aradlein/hass-agent-llm/workflows/CI/badge.svg)](https://github.com/aradlein/hass-agent-llm/actions)
+[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/prsws/pepa-arm-ha/releases)
+[![Build Status](https://github.com/aradlein/hass-agent-llm/workflows/CI/badge.svg)](https://github.com/prsws/pepa-arm-ha/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.3.1+-blue.svg)](https://www.home-assistant.io/)
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
 
-A highly customizable Home Assistant custom component that provides intelligent conversational AI capabilities with advanced tool calling, context injection, and conversation history management.
+Refactoring of the Home Agent integration (UPSTREAM - https://github.com/aradlein/hass-agent-llm) to enhance it for better context management, MCP server support, Plan→Execute agentic loop and more for use in the Pepa AI for Aging project (https://ai4aging.org). **_This document will be updated as the integration evolves._**
 
-## What's New in v0.9.4
+# UPSTREAM Documentation (partly edited)
+Home Agent is a highly customizable Home Assistant custom component that provides intelligent conversational AI capabilities with advanced tool calling, context injection, and conversation history management.
+
+## What's New in UPSTREAM v0.9.4
 
 - **Embedding Cache Memory Leak Fix** - Fixed a memory leak where the embedding cache accumulated stale entries for frequently-changing entities (e.g., temperature sensors). The cache now evicts the old entry when an entity's state changes, instead of leaving it to linger (#111)
 - **CI Fixes** - Fixed version validation workflow, resolved flake8 violations, and fixed black formatting issues
@@ -74,25 +77,25 @@ Home Agent extends Home Assistant's native conversation platform to enable natur
 
 ## Installation
 
-### HACS (Recommended)
+~~### HACS (Recommended)~~
 
-1. In HACS, go to **Integrations** → **⋮** → **Custom repositories**
-2. Add repository: `https://github.com/aradlein/hass-agent-llm`
-3. Category: **Integration**
-4. Click **Add**
-5. Search for "Home Agent" in HACS
-6. Click **Install**
-7. Restart Home Assistant
-8. Go to Settings > Devices & Services > Add Integration
-9. Search for "Home Agent" and follow the setup wizard
+~~1. In HACS, go to **Integrations** → **⋮** → **Custom repositories**~~
+~~2. Add repository: `https://github.com/aradlein/hass-agent-llm`~~
+~~3. Category: **Integration**~~
+~~4. Click **Add**~~
+~~5. Search for "Home Agent" in HACS~~
+~~6. Click **Install**~~
+~~7. Restart Home Assistant~~
+~~8. Go to Settings > Devices & Services > Add Integration~~
+~~9. Search for "Home Agent" and follow the setup wizard~~
 
 ### Manual Installation
 
 1. Download the latest release from GitHub
-2. Copy the `custom_components/home_agent` directory to your Home Assistant `config/custom_components` folder
+2. Copy the `custom_components/pepa_arm_ha` directory to your Home Assistant `config/custom_components` folder
 3. Restart Home Assistant
 4. Go to Settings > Devices & Services > Add Integration
-5. Search for "Home Agent" and complete the configuration
+5. Search for "Pepa Automation/Sensory Arm - AI4Aging.org" and complete the configuration
 
 **For detailed installation instructions, see [Installation Guide](docs/INSTALLATION.md)**
 
@@ -102,7 +105,7 @@ Home Agent extends Home Assistant's native conversation platform to enable natur
 
 Navigate to Settings > Devices & Services > Add Integration, search for "Home Agent", and configure:
 
-- **Name**: Friendly name (e.g., "Home Agent")
+- **Name**: Friendly name (e.g., "Pepa Sensory Arm")
 - **LLM Base URL**: Your OpenAI-compatible endpoint
   - OpenAI: `https://api.openai.com/v1`
   - Azure OpenAI: `https://<resource>.openai.azure.com/openai/deployments/<deployment>`
@@ -118,7 +121,7 @@ Navigate to Settings > Devices & Services > Add Integration, search for "Home Ag
 Call the conversation service:
 
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "Turn on the living room lights"
 ```
@@ -177,7 +180,7 @@ automation:
       - platform: time
         at: "07:00:00"
     action:
-      - service: home_agent.process
+      - service: pepa_arm_ha.process
         data:
           text: "Good morning! Please prepare for the day."
           conversation_id: "morning_routine"
@@ -249,15 +252,15 @@ Reset your conversation context using the `clear_conversation` service:
 
 ```yaml
 # Clear conversation for current user/device
-service: home_agent.clear_conversation
+service: pepa_arm_ha.clear_conversation
 
 # Clear conversation for specific device
-service: home_agent.clear_conversation
+service: pepa_arm_ha.clear_conversation
 data:
   device_id: "kitchen_satellite"
 
 # Clear all conversations
-service: home_agent.clear_conversation
+service: pepa_arm_ha.clear_conversation
 ```
 
 ### Multi-Device Behavior
@@ -293,7 +296,7 @@ pip install -r requirements_dev.txt
 pytest tests/unit/ -v
 
 # Run with coverage
-pytest tests/ --cov=custom_components.home_agent --cov-report=html
+pytest tests/ --cov=custom_components.pepa_arm_ha --cov-report=html
 ```
 
 **Test Status**: 400+ passing tests across core functionality, vector DB, memory system, custom tools, and streaming.

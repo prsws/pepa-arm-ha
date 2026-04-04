@@ -12,8 +12,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from homeassistant.core import HomeAssistant
 
-from custom_components.home_agent.agent import HomeAgent
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.agent import HomeAgent
+from custom_components.pepa_arm_ha.const import (
     CONF_CONTEXT_MODE,
     CONF_EMIT_EVENTS,
     CONF_EXTERNAL_LLM_ENABLED,
@@ -47,7 +47,7 @@ class TestDisabledFeatures:
     @pytest.fixture
     async def mock_session_manager(self, test_hass):
         """Create a mock ConversationSessionManager for testing."""
-        from custom_components.home_agent.conversation_session import ConversationSessionManager
+        from custom_components.pepa_arm_ha.conversation_session import ConversationSessionManager
 
         manager = ConversationSessionManager(test_hass)
         await manager.async_load()
@@ -330,7 +330,7 @@ class TestDisabledFeatures:
 
         # Mock VectorDBContextProvider to ensure it's NOT used
         with patch(
-            "custom_components.home_agent.context_providers.vector_db.VectorDBContextProvider"
+            "custom_components.pepa_arm_ha.context_providers.vector_db.VectorDBContextProvider"
         ) as mock_vector_provider:
             with patch.object(agent, "_call_llm", return_value=mock_llm_response):
                 response = await agent.process_message(
@@ -363,7 +363,7 @@ class TestDisabledFeatures:
         agent = HomeAgent(mock_hass, config, mock_session_manager)
 
         # Mock ExternalLLMTool to verify it's NOT instantiated
-        with patch("custom_components.home_agent.agent.core.ExternalLLMTool") as mock_ext_llm:
+        with patch("custom_components.pepa_arm_ha.agent.core.ExternalLLMTool") as mock_ext_llm:
             # Force tool registration
             agent._ensure_tools_registered()
 
@@ -386,7 +386,7 @@ class TestDisabledFeatures:
         - Extraction method detects this and exits early
         - No external LLM tool calls occur
         """
-        from custom_components.home_agent.const import CONF_MEMORY_EXTRACTION_LLM
+        from custom_components.pepa_arm_ha.const import CONF_MEMORY_EXTRACTION_LLM
 
         config = {
             **base_config,

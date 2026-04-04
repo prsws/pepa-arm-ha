@@ -9,8 +9,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from custom_components.home_agent.agent import HomeAgent
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.agent import HomeAgent
+from custom_components.pepa_arm_ha.const import (
     CONF_EXTERNAL_LLM_ENABLED,
     CONF_LLM_API_KEY,
     CONF_LLM_BASE_URL,
@@ -57,10 +57,10 @@ def agent_config():
 @pytest.fixture
 def home_agent(mock_hass, agent_config):
     """Create a HomeAgent instance for testing."""
-    with patch("custom_components.home_agent.agent.core.ContextManager"):
-        with patch("custom_components.home_agent.agent.core.ConversationHistoryManager"):
-            with patch("custom_components.home_agent.agent.core.ToolHandler"):
-                from custom_components.home_agent.conversation_session import (
+    with patch("custom_components.pepa_arm_ha.agent.core.ContextManager"):
+        with patch("custom_components.pepa_arm_ha.agent.core.ConversationHistoryManager"):
+            with patch("custom_components.pepa_arm_ha.agent.core.ToolHandler"):
+                from custom_components.pepa_arm_ha.conversation_session import (
                     ConversationSessionManager,
                 )
 
@@ -679,7 +679,7 @@ class TestExtractAndStoreMemories:
             # Verify event was fired
             mock_hass.bus.async_fire.assert_called_once()
             call_args = mock_hass.bus.async_fire.call_args
-            assert "home_agent.memory.extracted" in call_args[0]
+            assert "pepa_arm_ha.memory.extracted" in call_args[0]
 
     async def test_extraction_handles_llm_failure_gracefully(self, home_agent, mock_memory_manager):
         """Test that LLM failure doesn't crash extraction."""

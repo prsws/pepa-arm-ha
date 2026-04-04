@@ -6,13 +6,13 @@ import pytest
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResultType
 
-from custom_components.home_agent.config_flow import (
+from custom_components.pepa_arm_ha.config_flow import (
     HomeAgentConfigFlow,
     HomeAgentOptionsFlow,
     _migrate_legacy_backend,
     _validate_proxy_headers,
 )
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.const import (
     CONF_CONTEXT_FORMAT,
     CONF_CONTEXT_MODE,
     CONF_DEBUG_LOGGING,
@@ -42,7 +42,7 @@ from custom_components.home_agent.const import (
     DEFAULT_STREAMING_ENABLED,
     LLM_BACKEND_OLLAMA_GPU,
 )
-from custom_components.home_agent.exceptions import ValidationError
+from custom_components.pepa_arm_ha.exceptions import ValidationError
 
 
 @pytest.fixture

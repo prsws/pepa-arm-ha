@@ -1,4 +1,4 @@
-"""Base context provider interface for home_agent.
+"""Base context provider interface for pepa_arm_ha.
 
 This module defines the abstract base class for all context providers.
 Context providers are responsible for gathering and formatting relevant

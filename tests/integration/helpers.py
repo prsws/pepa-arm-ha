@@ -82,7 +82,7 @@ async def send_message_and_wait(
         context: Optional Home Assistant context
         device_id: Optional device ID
         satellite_id: Optional satellite ID
-        agent_id: Optional agent ID (defaults to "home_agent")
+        agent_id: Optional agent ID (defaults to "pepa_arm_ha")
         language: Language code for the conversation (default: "en")
 
     Returns:
@@ -107,7 +107,7 @@ async def send_message_and_wait(
         device_id=device_id,
         satellite_id=satellite_id,
         language=language,
-        agent_id=agent_id or "home_agent",
+        agent_id=agent_id or "pepa_arm_ha",
     )
 
     # Process with timeout

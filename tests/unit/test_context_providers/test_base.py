@@ -9,7 +9,7 @@ from unittest.mock import Mock
 import pytest
 from homeassistant.core import State
 
-from custom_components.home_agent.context_providers.base import ContextProvider
+from custom_components.pepa_arm_ha.context_providers.base import ContextProvider
 
 
 class ConcreteContextProvider(ContextProvider):
@@ -442,7 +442,7 @@ class TestMakeJsonSerializable:
         """Test that datetime objects are converted to ISO format strings."""
         from datetime import datetime
 
-        from custom_components.home_agent.context_providers.base import _make_json_serializable
+        from custom_components.pepa_arm_ha.context_providers.base import _make_json_serializable
 
         dt = datetime(2025, 11, 24, 13, 18, 7, 730000)
         result = _make_json_serializable(dt)
@@ -455,7 +455,7 @@ class TestMakeJsonSerializable:
         """Test that datetime in nested dict is serialized."""
         from datetime import datetime
 
-        from custom_components.home_agent.context_providers.base import _make_json_serializable
+        from custom_components.pepa_arm_ha.context_providers.base import _make_json_serializable
 
         data = {
             "name": "test",
@@ -471,7 +471,7 @@ class TestMakeJsonSerializable:
         """Test that datetime in list is serialized."""
         from datetime import datetime
 
-        from custom_components.home_agent.context_providers.base import _make_json_serializable
+        from custom_components.pepa_arm_ha.context_providers.base import _make_json_serializable
 
         data = [datetime(2025, 1, 1), "string", 123]
         result = _make_json_serializable(data)
@@ -482,7 +482,7 @@ class TestMakeJsonSerializable:
 
     def test_serialize_primitives_unchanged(self):
         """Test that primitives pass through unchanged."""
-        from custom_components.home_agent.context_providers.base import _make_json_serializable
+        from custom_components.pepa_arm_ha.context_providers.base import _make_json_serializable
 
         assert _make_json_serializable("string") == "string"
         assert _make_json_serializable(123) == 123
@@ -492,7 +492,7 @@ class TestMakeJsonSerializable:
 
     def test_serialize_non_serializable_to_string(self):
         """Test that non-serializable objects become strings."""
-        from custom_components.home_agent.context_providers.base import _make_json_serializable
+        from custom_components.pepa_arm_ha.context_providers.base import _make_json_serializable
 
         class CustomObject:
             def __str__(self):
@@ -560,7 +560,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("light.living_room")
@@ -589,7 +589,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("light.living_room", include_labels=True)
@@ -619,7 +619,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("sensor.temperature", include_labels=True)
@@ -651,7 +651,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("switch.outlet", include_labels=True)
@@ -681,7 +681,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("binary_sensor.door", include_labels=True)
@@ -707,7 +707,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = None
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("light.unknown", include_labels=True)
@@ -730,7 +730,7 @@ class TestGetEntityStateWithLabels:
 
         # Mock entity registry to raise AttributeError
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             side_effect=AttributeError("Registry not available"),
         ):
             result = provider._get_entity_state("light.test", include_labels=True)
@@ -756,7 +756,7 @@ class TestGetEntityStateWithLabels:
 
         # Mock entity registry to raise RuntimeError
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             side_effect=RuntimeError("Event loop not running"),
         ):
             result = provider._get_entity_state("sensor.test", include_labels=True)
@@ -789,7 +789,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state(
@@ -829,7 +829,7 @@ class TestGetEntityStateWithLabels:
         mock_registry.async_get.return_value = mock_entity_entry
 
         with patch(
-            "custom_components.home_agent.context_providers.base.er.async_get",
+            "custom_components.pepa_arm_ha.context_providers.base.er.async_get",
             return_value=mock_registry,
         ):
             result = provider._get_entity_state("cover.garage", include_labels=False)

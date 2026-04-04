@@ -117,7 +117,7 @@ Agent: "Max is allergic to chicken, so avoid chicken-based foods..."
 
 **List all memories:**
 ```yaml
-service: home_agent.list_memories
+service: pepa_arm_ha.list_memories
 data:
   memory_type: preference  # Optional: fact, preference, context, event
   limit: 50                # Optional
@@ -125,7 +125,7 @@ data:
 
 **Search memories:**
 ```yaml
-service: home_agent.search_memories
+service: pepa_arm_ha.search_memories
 data:
   query: "temperature preferences"
   limit: 10
@@ -134,7 +134,7 @@ data:
 
 **Add memory manually:**
 ```yaml
-service: home_agent.add_memory
+service: pepa_arm_ha.add_memory
 data:
   content: "User's cat Felix is on a prescription diet"
   type: fact
@@ -143,14 +143,14 @@ data:
 
 **Delete specific memory:**
 ```yaml
-service: home_agent.delete_memory
+service: pepa_arm_ha.delete_memory
 data:
   memory_id: "abc-123-def-456"  # Get from list_memories
 ```
 
 **Clear all memories:**
 ```yaml
-service: home_agent.clear_memories
+service: pepa_arm_ha.clear_memories
 data:
   confirm: true  # Required
 ```
@@ -198,14 +198,14 @@ data:
 
 **Complete deletion:**
 ```yaml
-service: home_agent.clear_memories
+service: pepa_arm_ha.clear_memories
 data:
   confirm: true
 ```
 
 Or manually delete:
 ```bash
-rm /config/.storage/home_agent.memories
+rm /config/.storage/pepa_arm_ha.memories
 ```
 
 ## Automatic Behavior

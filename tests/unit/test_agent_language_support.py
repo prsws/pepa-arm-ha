@@ -10,7 +10,7 @@ from unittest.mock import MagicMock
 import pytest
 from homeassistant.const import MATCH_ALL
 
-from custom_components.home_agent.agent.core import HomeAgent
+from custom_components.pepa_arm_ha.agent.core import HomeAgent
 
 
 @pytest.fixture

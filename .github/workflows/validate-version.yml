@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - 'custom_components/home_agent/manifest.json'
-      - 'custom_components/home_agent/const.py'
+      - '../../custom_components/pepa_arm_ha/manifest.json'
+      - '../../custom_components/pepa_arm_ha/const.py'
   push:
     branches:
       - main
     paths:
-      - 'custom_components/home_agent/manifest.json'
-      - 'custom_components/home_agent/const.py'
+      - '../../custom_components/pepa_arm_ha/manifest.json'
+      - '../../custom_components/pepa_arm_ha/const.py'
 
 jobs:
   validate-version:

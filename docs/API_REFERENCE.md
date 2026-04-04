@@ -39,7 +39,7 @@ Quick reference for Home Agent services, events, and tools.
 Process a conversation:
 
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "Turn on the living room lights and set them to 50% brightness"
   conversation_id: "main_conversation"
@@ -48,7 +48,7 @@ data:
 Search memories:
 
 ```yaml
-service: home_agent.search_memories
+service: pepa_arm_ha.search_memories
 data:
   query: "bedroom temperature preferences"
   limit: 10
@@ -64,7 +64,7 @@ automation:
   - alias: "Track Token Usage"
     trigger:
       - platform: event
-        event_type: home_agent.conversation.finished
+        event_type: pepa_arm_ha.conversation.finished
     action:
       - service: input_number.set_value
         target:
@@ -82,7 +82,7 @@ automation:
   - alias: "Alert on Home Agent Errors"
     trigger:
       - platform: event
-        event_type: home_agent.error
+        event_type: pepa_arm_ha.error
     action:
       - service: notify.admin
         data:
@@ -98,7 +98,7 @@ The LLM automatically calls these tools, but you can test them manually:
 
 **Control a device:**
 ```yaml
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: ha_control
   parameters:
@@ -110,7 +110,7 @@ data:
 
 **Query entity state:**
 ```yaml
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: ha_query
   parameters:
@@ -119,7 +119,7 @@ data:
 
 **Query with history:**
 ```yaml
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: ha_query
   parameters:
@@ -142,7 +142,7 @@ Process a conversation message.
 
 **Example:**
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "What's the temperature in the living room?"
   conversation_id: "main_conversation"
@@ -159,7 +159,7 @@ Manually store a memory.
 
 **Example:**
 ```yaml
-service: home_agent.add_memory
+service: pepa_arm_ha.add_memory
 data:
   content: "User prefers bedroom temperature at 68°F for sleeping"
   type: preference
@@ -176,12 +176,12 @@ Clear conversation history.
 **Examples:**
 ```yaml
 # Clear specific conversation
-service: home_agent.clear_history
+service: pepa_arm_ha.clear_history
 data:
   conversation_id: "living_room_conversation"
 
 # Clear all conversations
-service: home_agent.clear_history
+service: pepa_arm_ha.clear_history
 ```
 
 ## Event Details

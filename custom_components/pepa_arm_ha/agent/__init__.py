@@ -22,7 +22,7 @@ Usage:
     during config entry setup:
 
     Example:
-        from custom_components.home_agent.agent import HomeAgent
+        from custom_components.pepa_arm_ha.agent import HomeAgent
 
         agent = HomeAgent(
             hass=hass,
@@ -43,7 +43,7 @@ Integration Points:
 
 For backward compatibility, the HomeAgent class is re-exported from this module,
 allowing imports like:
-    from custom_components.home_agent.agent import HomeAgent
+    from custom_components.pepa_arm_ha.agent import HomeAgent
 """
 
 from .core import HomeAgent

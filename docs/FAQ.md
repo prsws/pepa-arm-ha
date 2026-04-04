@@ -205,11 +205,11 @@ Debug Logging: true
 History Enabled: false
 
 # Clear all data
-service: home_agent.clear_memories
+service: pepa_arm_ha.clear_memories
 data:
   confirm: true
 ---
-service: home_agent.clear_history
+service: pepa_arm_ha.clear_history
 ```
 
 ### Can I disable memory for privacy?
@@ -221,7 +221,7 @@ Settings → Home Agent → Configure → Memory System
 Memory Enabled: false
 
 # Or via service
-service: home_agent.clear_memories
+service: pepa_arm_ha.clear_memories
 data:
   confirm: true
 ```
@@ -238,12 +238,12 @@ History Persist: false  # Don't save across restarts
 **Complete deletion:**
 ```yaml
 # 1. Clear memories
-service: home_agent.clear_memories
+service: pepa_arm_ha.clear_memories
 data:
   confirm: true
 
 # 2. Clear history
-service: home_agent.clear_history
+service: pepa_arm_ha.clear_history
 
 # 3. Disable future collection
 Memory Enabled: false
@@ -306,7 +306,7 @@ curl http://localhost:11434/api/tags
 3. Validate YAML syntax: Settings → System → Configuration Validation
 4. Test manually:
    ```yaml
-   service: home_agent.execute_tool
+   service: pepa_arm_ha.execute_tool
    data:
      tool_name: ha_query
      parameters:
@@ -338,7 +338,7 @@ Listen to: home_agent.*
 
 **4. Test tools manually:**
 ```yaml
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: ha_control
   parameters:

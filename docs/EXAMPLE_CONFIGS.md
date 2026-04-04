@@ -146,7 +146,7 @@ Memory Enabled: false  # Faster, lower cost
      - alias: "Monitor OpenAI Usage"
        trigger:
          - platform: event
-           event_type: home_agent.conversation.finished
+           event_type: pepa_arm_ha.conversation.finished
        action:
          - service: counter.increment
            target:
@@ -837,7 +837,7 @@ automation:
   - alias: "Track External LLM Usage"
     trigger:
       - platform: event
-        event_type: home_agent.tool.executed
+        event_type: pepa_arm_ha.tool.executed
         event_data:
           tool_name: query_external_llm
     action:
@@ -1085,7 +1085,7 @@ Embedding Model: text-embedding-3-large  # Better embeddings
 
 **1. Store a preference:**
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "I prefer the bedroom at 68°F for sleeping"
 ```
@@ -1098,7 +1098,7 @@ Check logs for extraction:
 
 **2. Later, test recall:**
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "What temperature should I set for the bedroom?"
 ```
@@ -1110,7 +1110,7 @@ Expected response:
 
 **3. Manually check memories:**
 ```yaml
-service: home_agent.list_memories
+service: pepa_arm_ha.list_memories
 data:
   limit: 10
 ```
@@ -1119,7 +1119,7 @@ data:
 
 **Add memory directly:**
 ```yaml
-service: home_agent.add_memory
+service: pepa_arm_ha.add_memory
 data:
   content: "Garbage pickup is every Thursday morning"
   type: fact
@@ -1128,7 +1128,7 @@ data:
 
 **Search memories:**
 ```yaml
-service: home_agent.search_memories
+service: pepa_arm_ha.search_memories
 data:
   query: "temperature preferences"
   limit: 5
@@ -1137,14 +1137,14 @@ data:
 
 **Delete specific memory:**
 ```yaml
-service: home_agent.delete_memory
+service: pepa_arm_ha.delete_memory
 data:
   memory_id: "abc-123-def-456"  # From list_memories
 ```
 
 **Clear all memories:**
 ```yaml
-service: home_agent.clear_memories
+service: pepa_arm_ha.clear_memories
 data:
   confirm: true  # Required safety check
 ```
@@ -1249,7 +1249,7 @@ automation:
       - platform: time
         at: "00:00:00"  # Daily at midnight
     action:
-      - service: home_agent.list_memories
+      - service: pepa_arm_ha.list_memories
         response_variable: memories
       - service: notify.admin
         data:
@@ -1267,7 +1267,7 @@ automation:
       - condition: template
         value_template: "{{ now().day == 1 }}"  # First of month
     action:
-      - service: home_agent.search_memories
+      - service: pepa_arm_ha.search_memories
         data:
           query: "outdated temporary"
           min_importance: 0.0
@@ -1451,7 +1451,7 @@ After configuration, index your Home Assistant entities:
 
 **Via YAML:**
 ```yaml
-service: home_agent.reindex_entities
+service: pepa_arm_ha.reindex_entities
 ```
 
 **Monitor progress in logs:**
@@ -1471,7 +1471,7 @@ service: home_agent.reindex_entities
 
 **Test query:**
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "What's the temperature in the bedroom?"
 ```
@@ -1696,7 +1696,7 @@ curl https://api.openai.com/v1/embeddings \
 curl http://localhost:8000/api/v1/collections
 
 # Reset and reindex
-service: home_agent.reindex_entities
+service: pepa_arm_ha.reindex_entities
 ```
 
 **Indexing fails:**

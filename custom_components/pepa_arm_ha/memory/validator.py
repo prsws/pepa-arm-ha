@@ -20,7 +20,7 @@ Key Classes:
         - Validation statistics
 
 Usage Example:
-    from custom_components.home_agent.memory.validator import MemoryValidator
+    from custom_components.pepa_arm_ha.memory.validator import MemoryValidator
 
     # Create validator with default thresholds
     validator = MemoryValidator()

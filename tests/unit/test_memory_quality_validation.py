@@ -16,8 +16,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from custom_components.home_agent.agent import HomeAgent
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.agent import HomeAgent
+from custom_components.pepa_arm_ha.const import (
     CONF_LLM_API_KEY,
     CONF_LLM_BASE_URL,
     CONF_LLM_MODEL,
@@ -25,7 +25,7 @@ from custom_components.home_agent.const import (
     CONF_MEMORY_EXTRACTION_ENABLED,
     CONF_MEMORY_EXTRACTION_LLM,
 )
-from custom_components.home_agent.memory_manager import MemoryManager
+from custom_components.pepa_arm_ha.memory_manager import MemoryManager
 
 
 @pytest.fixture
@@ -59,7 +59,7 @@ def memory_manager(mock_hass):
     config = {
         "memory_dedup_threshold": 0.9,
     }
-    with patch("custom_components.home_agent.vector_db_manager.VectorDBManager"):
+    with patch("custom_components.pepa_arm_ha.vector_db_manager.VectorDBManager"):
         mock_vector_db = MagicMock()
         manager = MemoryManager(mock_hass, mock_vector_db, config)
         return manager
@@ -68,10 +68,10 @@ def memory_manager(mock_hass):
 @pytest.fixture
 def home_agent(mock_hass, agent_config, memory_manager):
     """Create a HomeAgent instance for testing."""
-    with patch("custom_components.home_agent.agent.core.ContextManager"):
-        with patch("custom_components.home_agent.agent.core.ConversationHistoryManager"):
-            with patch("custom_components.home_agent.agent.core.ToolHandler"):
-                from custom_components.home_agent.conversation_session import (
+    with patch("custom_components.pepa_arm_ha.agent.core.ContextManager"):
+        with patch("custom_components.pepa_arm_ha.agent.core.ConversationHistoryManager"):
+            with patch("custom_components.pepa_arm_ha.agent.core.ToolHandler"):
+                from custom_components.pepa_arm_ha.conversation_session import (
                     ConversationSessionManager,
                 )
 

@@ -1054,8 +1054,8 @@ class HomeAgent(
                     break
 
         if entry_id is None:
-            _LOGGER.warning("Could not find entry_id for streaming, using 'home_agent'")
-            entry_id = "home_agent"
+            _LOGGER.warning("Could not find entry_id for streaming, using 'pepa_arm_ha'")
+            entry_id = "pepa_arm_ha"
 
         # Track TTFT (Time To First Token) - only set once on first iteration
         first_content_time: float | None = None

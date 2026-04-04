@@ -6,13 +6,13 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from aiohttp import ClientSession
 
-from custom_components.home_agent.agent.llm import LLMMixin
-from custom_components.home_agent.agent.streaming import StreamingMixin
-from custom_components.home_agent.config_flow import (
+from custom_components.pepa_arm_ha.agent.llm import LLMMixin
+from custom_components.pepa_arm_ha.agent.streaming import StreamingMixin
+from custom_components.pepa_arm_ha.config_flow import (
     _migrate_legacy_backend,
     _validate_proxy_headers,
 )
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.const import (
     CONF_LLM_API_KEY,
     CONF_LLM_BACKEND,
     CONF_LLM_BASE_URL,
@@ -23,7 +23,7 @@ from custom_components.home_agent.const import (
 )
 
 # Note: CONF_LLM_BACKEND and LLM_BACKEND_* are still needed for migration tests
-from custom_components.home_agent.exceptions import ValidationError
+from custom_components.pepa_arm_ha.exceptions import ValidationError
 
 
 class TestProxyHeadersValidation:

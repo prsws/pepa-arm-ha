@@ -36,7 +36,7 @@ def disable_thinking_for_tests():
     # Patch where the value is used (agent.core), not where it's defined (const)
     # because Python imports copy the value at import time
     with patch(
-        "custom_components.home_agent.agent.core.DEFAULT_THINKING_ENABLED",
+        "custom_components.pepa_arm_ha.agent.core.DEFAULT_THINKING_ENABLED",
         False,
     ):
         yield
@@ -415,7 +415,7 @@ async def session_manager(test_hass: HomeAssistant):
     Returns:
         ConversationSessionManager instance
     """
-    from custom_components.home_agent.conversation_session import ConversationSessionManager
+    from custom_components.pepa_arm_ha.conversation_session import ConversationSessionManager
 
     manager = ConversationSessionManager(test_hass)
     await manager.async_load()

@@ -1,4 +1,4 @@
-"""Direct context provider for home_agent.
+"""Direct context provider for pepa_arm_ha.
 
 This provider directly fetches and formats configured entities and their
 attributes for injection into LLM prompts. It supports both JSON and

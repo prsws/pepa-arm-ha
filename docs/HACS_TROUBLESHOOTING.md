@@ -40,7 +40,7 @@ If HACS isn't working, install manually:
 2. **Extract to custom_components**:
    ```bash
    unzip v0.8.3.zip
-   mv hass-agent-llm-0.8.3/custom_components/home_agent config/custom_components/
+   mv hass-agent-llm-0.8.3/custom_components/pepa_arm_ha config/custom_components/
    ```
 
 3. **Restart Home Assistant**
@@ -64,7 +64,7 @@ After installation, verify it's working:
 
 3. **Test basic functionality**:
    ```yaml
-   service: home_agent.process
+   service: pepa_arm_ha.process
    data:
      text: "What's the status of my home?"
    ```

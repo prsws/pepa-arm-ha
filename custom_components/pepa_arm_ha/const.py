@@ -3,7 +3,7 @@
 from typing import Final
 
 # Domain and component info
-DOMAIN: Final = "home_agent"
+DOMAIN: Final = "pepa_arm_ha"
 DEFAULT_NAME: Final = "Home Agent"
 VERSION: Final = "0.9.4"
 

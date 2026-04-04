@@ -540,7 +540,7 @@ automation:
   - alias: "Log Custom Tool Usage"
     trigger:
       - platform: event
-        event_type: home_agent.tool.executed
+        event_type: pepa_arm_ha.tool.executed
         event_data:
           tool_name: check_weather
     action:
@@ -692,7 +692,7 @@ automation:
       title: "Home Assistant"
       data:
         priority: "{{ 'high' if urgent else 'normal' }}"
-        tag: "home_agent"
+        tag: "pepa_arm_ha"
         group: "{{ who }}"
 ```
 
@@ -766,7 +766,7 @@ logger:
 Test custom tools using the `home_agent.execute_tool` service:
 
 ```yaml
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: check_weather
   parameters:

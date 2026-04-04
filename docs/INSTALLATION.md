@@ -30,12 +30,12 @@ Note: Currently in development. Use manual installation below.
 
 2. **Copy to custom components**:
    ```bash
-   cp -r home-agent/custom_components/home_agent /config/custom_components/
+   cp -r home-agent/custom_components/pepa_arm_ha /config/custom_components/
    ```
 
 3. **Verify files are in place**:
    ```bash
-   ls -la /config/custom_components/home_agent/
+   ls -la /config/custom_components/pepa_arm_ha/
    ```
 
 4. **Restart Home Assistant** via Settings > System > Restart
@@ -160,7 +160,7 @@ text: "Turn on the living room lights"
          - platform: time
            at: "07:00:00"
        action:
-         - service: home_agent.process
+         - service: pepa_arm_ha.process
            data:
              text: "Give me a morning briefing"
    ```

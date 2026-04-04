@@ -120,7 +120,7 @@ Monitor progress in logs:
 Test a query:
 
 ```yaml
-service: home_agent.process
+service: pepa_arm_ha.process
 data:
   text: "What is the bedroom temperature?"
 ```

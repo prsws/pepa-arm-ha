@@ -1,4 +1,4 @@
-"""Context providers for home_agent.
+"""Context providers for pepa_arm_ha.
 
 This package provides different strategies for gathering and formatting
 entity context to be injected into LLM prompts.

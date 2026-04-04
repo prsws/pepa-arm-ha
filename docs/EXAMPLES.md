@@ -123,7 +123,7 @@ automation:
   - alias: "Log Device Control Events"
     trigger:
       - platform: event
-        event_type: home_agent.tool.executed
+        event_type: pepa_arm_ha.tool.executed
         event_data:
           tool_name: ha_control
     condition:
@@ -149,7 +149,7 @@ automation:
       - platform: time
         at: "07:00:00"
     action:
-      - service: home_agent.process
+      - service: pepa_arm_ha.process
         data:
           text: >
             Good morning! Please prepare for the day based on my preferences,
@@ -336,7 +336,7 @@ home_agent:
       after: "06:00:00"
       before: "09:00:00"
   action:
-    - service: home_agent.process
+    - service: pepa_arm_ha.process
       data:
         text: >
           Good morning! Check the weather and suggest what to prepare for the day.
@@ -356,7 +356,7 @@ home_agent:
     - service: camera.snapshot
       target:
         entity_id: camera.front_door
-    - service: home_agent.process
+    - service: pepa_arm_ha.process
       data:
         text: >
           Front door opened while alarm is armed. Analyze if this matches

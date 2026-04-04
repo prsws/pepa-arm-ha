@@ -13,7 +13,7 @@ import asyncio
 
 import pytest
 
-from custom_components.home_agent.vector_db_manager import VectorDBManager
+from custom_components.pepa_arm_ha.vector_db_manager import VectorDBManager
 
 
 @pytest.mark.integration

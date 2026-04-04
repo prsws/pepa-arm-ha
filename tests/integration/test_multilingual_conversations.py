@@ -14,8 +14,8 @@ from unittest.mock import patch
 
 import pytest
 
-from custom_components.home_agent.agent import HomeAgent
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.agent import HomeAgent
+from custom_components.pepa_arm_ha.const import (
     CONF_EMIT_EVENTS,
     CONF_HISTORY_ENABLED,
     CONF_HISTORY_MAX_MESSAGES,

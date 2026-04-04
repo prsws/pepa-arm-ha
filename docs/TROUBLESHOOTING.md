@@ -129,7 +129,7 @@ Vector DB Port: 8000
 - Lower importance threshold: `Min Importance: 0.0`
 - Test search manually:
   ```yaml
-  service: home_agent.search_memories
+  service: pepa_arm_ha.search_memories
   data:
     query: "temperature preferences"
     limit: 10
@@ -189,14 +189,14 @@ Listen to: `home_agent.*`
 **Test tools directly:**
 ```yaml
 # Test ha_query
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: ha_query
   parameters:
     entity_id: light.living_room
 
 # Test ha_control
-service: home_agent.execute_tool
+service: pepa_arm_ha.execute_tool
 data:
   tool_name: ha_control
   parameters:

@@ -6,7 +6,7 @@ properly raised, caught, and inherit from the correct base classes.
 
 import pytest
 
-from custom_components.home_agent.exceptions import (
+from custom_components.pepa_arm_ha.exceptions import (
     AuthenticationError,
     ContextInjectionError,
     HomeAgentError,

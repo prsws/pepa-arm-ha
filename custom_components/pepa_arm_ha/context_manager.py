@@ -550,7 +550,7 @@ class ContextManager:
         token_count: int,
         user_input: str,
     ) -> None:
-        """Fire home_agent.context.injected event.
+        """Fire pepa_arm_ha.context.injected event.
 
         Args:
             conversation_id: Conversation identifier

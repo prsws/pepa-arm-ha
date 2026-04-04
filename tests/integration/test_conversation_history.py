@@ -6,8 +6,8 @@ and applies token/message limits.
 
 import pytest
 
-from custom_components.home_agent.agent import HomeAgent
-from custom_components.home_agent.const import (
+from custom_components.pepa_arm_ha.agent import HomeAgent
+from custom_components.pepa_arm_ha.const import (
     CONF_DEBUG_LOGGING,
     CONF_EMIT_EVENTS,
     CONF_HISTORY_ENABLED,

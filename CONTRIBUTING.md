@@ -68,7 +68,7 @@ pytest tests/unit/ tests/integration/ \
   --ignore=tests/integration/test_real_memory.py \
   --ignore=tests/integration/test_real_vector_db.py \
   --ignore=tests/integration/test_real_ttft_metrics.py \
-  --cov=custom_components.home_agent
+  --cov=custom_components.pepa_arm_ha
 ```
 
 ## Test Requirements for Pull Requests
