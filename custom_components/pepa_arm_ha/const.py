@@ -3,8 +3,8 @@
 from typing import Final
 
 # Domain and component info
-DOMAIN: Final = "pepa_arm_ha"
-DEFAULT_NAME: Final = "Home Agent"
+DOMAIN: Final = "pepa_arm_home_agent"
+DEFAULT_NAME: Final = "Pepa Arm Home Agent"
 VERSION: Final = "0.9.4"
 
 # Configuration keys - LLM Configuration
