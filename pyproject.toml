@@ -82,7 +82,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["custom_components/home_agent"]
+source = ["custom_components/pepa_arm_ha"]
 omit = [
     "*/tests/*",
     "*/__pycache__/*",
