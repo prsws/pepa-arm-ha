@@ -2,7 +2,7 @@
   "domain": "pepa_arm_home_agent",
   "name": "Pepa Arm Home Agent",
   "after_dependencies": ["recorder"],
-  "codeowners": ["@aradlein", "@prsws"],
+  "codeowners": ["@prsws", "@aradlein"],
   "config_flow": true,
   "dependencies": ["conversation"],
   "documentation": "https://github.com/prsws/pepa-arm-ha",

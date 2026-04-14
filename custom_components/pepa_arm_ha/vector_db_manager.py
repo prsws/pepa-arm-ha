@@ -162,7 +162,7 @@ class VectorDBManager:
             _LOGGER.info("Scheduling initial entity indexing in background...")
             self._initial_index_task = self.hass.async_create_background_task(
                 self.async_reindex_all_entities(),
-                "home_agent_initial_entity_indexing",
+                "pepa_home_agent_initial_entity_indexing",
             )
 
             # Set up state change listener for incremental updates
