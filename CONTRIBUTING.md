@@ -1,14 +1,14 @@
-# Contributing to Home Agent
+# Contributing to Pepa Arm Home Agent
 
-Thank you for your interest in contributing to Home Agent. This guide covers everything you need to get started.
+Thank you for your interest in contributing to Pepa Arm Home Agent. This guide covers everything you need to get started.
 
 ## Getting Started
 
-1. Fork the repository at [github.com/aradlein/hass-agent-llm](https://github.com/aradlein/hass-agent-llm)
+1. Fork the repository at [github.com/prsws/pepa-arm-ha](https://github.com/prsws/pepa-arm-ha)
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/<your-username>/hass-agent-llm.git
-   cd hass-agent-llm
+   git clone https://github.com/<your-username>/pepa-arm-ha.git
+   cd pepa-arm-ha
    ```
 3. Create a feature branch from `main`:
    ```bash
@@ -17,7 +17,7 @@ Thank you for your interest in contributing to Home Agent. This guide covers eve
 
 ## Development Setup
 
-**Requirements:** Python 3.13 or higher.
+**Requirements:** Python 3.14 or higher.
 
 1. Create a virtual environment and install dependencies:
    ```bash
@@ -144,4 +144,4 @@ The `main` branch has the following protections:
 
 ## Questions?
 
-Open a [Discussion](https://github.com/aradlein/hass-agent-llm/discussions) or check existing [Issues](https://github.com/aradlein/hass-agent-llm/issues).
+Open a [Discussion](https://github.com/prsws/pepa-arm-ha/discussions) or check existing [Issues](https://github.com/prsws/pepa-arm-ha/issues).
