@@ -1,4 +1,4 @@
-"""Tool registry for managing and executing Home Agent tools.
+"""Tool registry for managing and executing Pepa Arm Home Agent tools.
 
 This module provides the ToolRegistry class that manages tool registration,
 formatting for LLM consumption, and parameter validation.
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 class BaseTool(ABC):
-    """Base class for all Home Agent tools.
+    """Base class for all Pepa Arm Home Agent tools.
 
     All tools must inherit from this class and implement the execute method.
     Tools define their name, description, and parameter schema using OpenAI
@@ -145,7 +145,7 @@ class BaseTool(ABC):
 
 
 class ToolRegistry:
-    """Registry for managing Home Agent tools.
+    """Registry for managing Pepa Arm Home Agent tools.
 
     The ToolRegistry maintains a collection of available tools, formats them
     for LLM consumption, validates parameters, and orchestrates tool execution.

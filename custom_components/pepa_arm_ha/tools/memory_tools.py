@@ -1,4 +1,4 @@
-"""Memory management tools for Home Agent.
+"""Memory management tools for Pepa Arm Home Agent.
 
 This module provides tools for the LLM to manually store and recall memories.
 """

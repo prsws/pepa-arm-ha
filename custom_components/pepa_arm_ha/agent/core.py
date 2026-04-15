@@ -1,7 +1,7 @@
-"""Core conversation agent implementation for Home Agent.
+"""Core conversation agent implementation for Pepa Arm Home Agent.
 
 This module implements the HomeAgent class, which serves as the central orchestrator
-for all conversation-related functionality in the Home Agent integration. It brings
+for all conversation-related functionality in the Pepa Arm Home Agent integration. It brings
 together LLM communication, tool execution, context management, and conversation
 history to provide an intelligent conversational AI assistant for Home Assistant.
 
@@ -170,7 +170,7 @@ class HomeAgent(
     MemoryExtractionMixin,
     AbstractConversationAgent,
 ):
-    """Main conversation agent that orchestrates all Home Agent components.
+    """Main conversation agent that orchestrates all Pepa Arm Home Agent components.
 
     This class integrates with Home Assistant's conversation platform and provides
     intelligent conversational AI capabilities with tool calling, context injection,
@@ -183,7 +183,7 @@ class HomeAgent(
         config: dict[str, Any],
         session_manager: "ConversationSessionManager",
     ) -> None:
-        """Initialize the Home Agent.
+        """Initialize the Pepa Arm Home Agent.
 
         Args:
             hass: Home Assistant instance
@@ -221,7 +221,7 @@ class HomeAgent(
         # Memory manager reference (will be populated from hass.data if available)
         self._memory_manager = None
 
-        _LOGGER.info("Home Agent initialized with model %s", config.get(CONF_LLM_MODEL))
+        _LOGGER.info("Pepa Arm Home Agent initialized with model %s", config.get(CONF_LLM_MODEL))
 
     @property
     def supported_languages(self) -> str:

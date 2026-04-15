@@ -1,4 +1,4 @@
-"""Custom tool framework for the Home Agent integration.
+"""Custom tool framework for the Pepa Arm Home Agent integration.
 
 This module provides the CustomToolHandler factory and custom tool implementations
 that allow users to define custom tools via configuration.yaml, including REST API

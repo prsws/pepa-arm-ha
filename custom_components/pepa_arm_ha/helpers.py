@@ -1,4 +1,4 @@
-"""Helper utility functions for the Home Agent component.
+"""Helper utility functions for the Pepa Arm Home Agent component.
 
 This module provides utility functions for formatting data, validation,
 security, and token estimation used throughout the integration.

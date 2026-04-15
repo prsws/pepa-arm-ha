@@ -1,6 +1,6 @@
-"""Custom exceptions for the Home Agent component.
+"""Custom exceptions for the Pepa Arm Home Agent component.
 
-This module defines all custom exceptions used throughout the Home Agent
+This module defines all custom exceptions used throughout the Pepa Arm Home Agent
 integration for error handling and flow control.
 """
 
@@ -8,17 +8,17 @@ from __future__ import annotations
 
 
 class HomeAgentError(Exception):
-    """Base exception for all Home Agent errors.
+    """Base exception for all Pepa Arm Home Agent errors.
 
-    This is the parent exception class that all other Home Agent exceptions
-    inherit from. Use this for catching any Home Agent-related error.
+    This is the parent exception class that all other Pepa Arm Home Agent exceptions
+    inherit from. Use this for catching any Pepa Arm Home Agent-related error.
 
     Example:
         try:
-            # Some Home Agent operation
+            # Some Pepa Arm Home Agent operation
             pass
         except HomeAgentError as error:
-            _LOGGER.error("Home Agent error: %s", error)
+            _LOGGER.error("Pepa Arm Home Agent error: %s", error)
     """
 
 

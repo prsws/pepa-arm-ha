@@ -1,7 +1,7 @@
 """Vector database manager for entity embeddings.
 
 This module handles indexing Home Assistant entities into ChromaDB
-for semantic search capabilities in the Home Agent integration.
+for semantic search capabilities in the Pepa Arm Home Agent integration.
 """
 
 from __future__ import annotations

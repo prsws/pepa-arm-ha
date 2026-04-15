@@ -1,4 +1,4 @@
-"""Context manager for the Home Agent component.
+"""Context manager for the Pepa Arm Pepa Arm Home Agent component.
 
 This module provides the ContextManager class that orchestrates context injection
 strategies for LLM conversations. It manages different context providers (direct

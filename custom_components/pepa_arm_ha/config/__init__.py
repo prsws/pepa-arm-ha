@@ -1,1 +1,1 @@
-"""Configuration schemas for Home Agent."""
+"""Configuration schemas for Pepa Arm Home Agent."""

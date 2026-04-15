@@ -1,4 +1,4 @@
-"""Home Assistant control tool for the Home Agent integration.
+"""Home Assistant control tool for the Pepa Arm Home Agent integration.
 
 This module provides the HomeAssistantControlTool for executing control
 actions on Home Assistant entities (turn_on, turn_off, toggle, set_value).

@@ -1,4 +1,4 @@
-"""Vector DB (ChromaDB) context provider for Home Agent.
+"""Vector DB (ChromaDB) context provider for Pepa Arm Home Agent.
 
 This module provides semantic search-based context injection using ChromaDB
 vector database and embedding models.

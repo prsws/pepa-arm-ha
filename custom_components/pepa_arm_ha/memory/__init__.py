@@ -1,4 +1,4 @@
-"""Memory module for Home Agent.
+"""Memory module for Pepa Arm Home Agent.
 
 This module provides memory validation and quality control functionality.
 """

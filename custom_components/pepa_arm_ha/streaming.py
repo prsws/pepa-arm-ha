@@ -1,4 +1,4 @@
-"""Streaming response handler for Home Agent (OpenAI/Ollama compatible)."""
+"""Streaming response handler for Pepa Arm Home Agent (OpenAI/Ollama compatible)."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""Context optimization and compression for Home Agent.
+"""Context optimization and compression for Pepa Arm Home Agent.
 
 This module provides intelligent context compression to stay within token limits
 while preserving the most important information.

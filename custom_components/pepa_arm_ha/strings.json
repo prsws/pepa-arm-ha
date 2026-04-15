@@ -2,8 +2,8 @@
   "config": {
     "step": {
       "user": {
-        "title": "Set up Home Agent",
-        "description": "Configure your Home Agent integration with an OpenAI-compatible LLM endpoint.",
+        "title": "Set up Pepa Arm Home Agent",
+        "description": "Configure your Pepa Arm Home Agent integration with an OpenAI-compatible LLM endpoint.",
         "data": {
           "name": "Integration Name",
           "llm_base_url": "LLM API Base URL",
@@ -15,7 +15,7 @@
           "llm_proxy_headers": "Proxy Headers"
         },
         "data_description": {
-          "name": "A friendly name for this Home Agent instance",
+          "name": "A friendly name for this Pepa Arm Home Agent instance",
           "llm_base_url": "OpenAI-compatible API endpoint (e.g., api.openai.com/v1 or localhost:11434/v1 for Ollama)",
           "llm_api_key": "API key for authentication (leave empty if not required)",
           "llm_model": "The model to use (e.g., gpt-4o-mini, llama3.1, etc.)",
@@ -27,7 +27,7 @@
       },
       "context": {
         "title": "Context Injection",
-        "description": "Configure how Home Agent provides entity information to the LLM.",
+        "description": "Configure how Pepa Arm Home Agent provides entity information to the LLM.",
         "data": {
           "context_mode": "Context Mode",
           "context_format": "Context Format",
@@ -89,7 +89,7 @@
           "custom_prompt_additions": "Custom Prompt Additions"
         },
         "data_description": {
-          "use_default_prompt": "Use Home Agent's built-in system prompt that explains tool usage and guidelines",
+          "use_default_prompt": "Use Pepa Arm Home Agent's built-in system prompt that explains tool usage and guidelines",
           "custom_prompt_additions": "Additional instructions to append to the system prompt (e.g., preferences, house rules)"
         }
       },
@@ -165,15 +165,15 @@
       "unknown": "An unexpected error occurred. Please check the logs for details."
     },
     "abort": {
-      "already_configured": "This Home Agent instance is already configured.",
-      "single_instance_allowed": "Only a single instance of Home Agent is allowed."
+      "already_configured": "This Pepa Arm Home Agent instance is already configured.",
+      "single_instance_allowed": "Only a single instance of Pepa Arm Home Agent is allowed."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Configure Home Agent",
-        "description": "Update your Home Agent configuration.",
+        "title": "Configure Pepa Arm Home Agent",
+        "description": "Update your Pepa Arm Home Agent configuration.",
         "menu_options": {
           "llm_settings": "LLM Settings",
           "context_settings": "Context Settings",
@@ -279,7 +279,7 @@
           "custom_prompt_additions": "Custom Prompt Additions"
         },
         "data_description": {
-          "use_default_prompt": "Use Home Agent's built-in system prompt",
+          "use_default_prompt": "Use Pepa Arm Home Agent's built-in system prompt",
           "prompt_include_labels": "Include entity and device labels in the system prompt for better context",
           "custom_prompt_additions": "Additional instructions to append to the system prompt"
         }

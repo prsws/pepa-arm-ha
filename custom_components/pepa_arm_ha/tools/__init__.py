@@ -1,4 +1,4 @@
-"""Tools for Home Agent integration.
+"""Tools for Pepa Arm Home Agent integration.
 
 This module provides the tool system for executing Home Assistant operations
 and external queries through the LLM conversation interface.

@@ -1,4 +1,4 @@
-"""Home Assistant query tool for the Home Agent integration.
+"""Home Assistant query tool for the Pepa Arm Home Agent integration.
 
 This module provides the HomeAssistantQueryTool for querying entity states,
 attributes, and historical data from Home Assistant.

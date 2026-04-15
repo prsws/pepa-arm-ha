@@ -1,4 +1,4 @@
-"""Memory context provider for Home Agent.
+"""Memory context provider for Pepa Arm Home Agent.
 
 This module provides the MemoryContextProvider class that retrieves
 relevant memories based on user input using semantic search.

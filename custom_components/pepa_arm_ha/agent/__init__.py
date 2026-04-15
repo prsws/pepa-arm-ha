@@ -1,6 +1,6 @@
-"""Home Agent conversation agent package.
+"""Pepa Arm Home Agent conversation agent package.
 
-This package implements the core conversation agent functionality for the Home Agent
+This package implements the core conversation agent functionality for the Pepa Arm Home Agent
 integration. It provides the main HomeAgent class that orchestrates LLM interactions,
 tool execution, context management, and conversation history tracking.
 

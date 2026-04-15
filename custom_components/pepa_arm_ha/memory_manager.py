@@ -723,7 +723,7 @@ class MemoryManager:
             get_collection = partial(
                 self.vector_db_manager._client.get_or_create_collection,
                 name=self.collection_name,
-                metadata={"description": "Home Agent long-term memories"},
+                metadata={"description": "Pepa Arm Home Agent long-term memories"},
             )
             self._collection = await self.hass.async_add_executor_job(get_collection)
             _LOGGER.debug("Memory ChromaDB collection ready")

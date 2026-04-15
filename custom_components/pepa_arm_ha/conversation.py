@@ -1,4 +1,4 @@
-"""Conversation history management for Home Agent.
+"""Conversation history management for Pepa Arm Home Agent.
 
 This module provides conversation history storage and retrieval for maintaining
 context across multiple turns in a conversation.

@@ -1,9 +1,9 @@
-# Home Agent Services
-# Service definitions for the Home Agent custom component
+# Pepa Arm Home Agent Services
+# Service definitions for the Pepa Arm Home Agent custom component
 
 process:
   name: Process message
-  description: Process a conversation message through the Home Agent
+  description: Process a conversation message through the Pepa Arm Home Agent
   fields:
     text:
       name: Text

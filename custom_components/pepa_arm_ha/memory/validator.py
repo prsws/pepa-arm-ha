@@ -1,4 +1,4 @@
-"""Memory validation functionality for Home Agent.
+"""Memory validation functionality for Pepa Arm Home Agent.
 
 This module provides the MemoryValidator class that validates memory quality
 before storage. It consolidates validation logic that was previously embedded

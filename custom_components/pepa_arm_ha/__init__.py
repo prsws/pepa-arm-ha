@@ -1,4 +1,4 @@
-"""Home Agent - Intelligent conversation agent for Home Assistant.
+"""Pepa Arm Home Agent - Intelligent conversation agent for Home Assistant.
 
 This custom component provides advanced conversational AI capabilities with
 tool calling, context injection, and conversation history management.
@@ -45,7 +45,7 @@ PLATFORMS: list[Platform] = []  # No additional platforms needed for conversatio
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Set up the Home Agent component from YAML configuration.
+    """Set up the Pepa Arm Home Agent component from YAML configuration.
 
     Args:
         hass: Home Assistant instance
@@ -58,13 +58,13 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     hass.data.setdefault(DOMAIN, {})
     if DOMAIN in config:
         hass.data[DOMAIN]["yaml_config"] = config[DOMAIN]
-        _LOGGER.info("Loaded Home Agent YAML configuration")
+        _LOGGER.info("Loaded Pepa Arm Home Agent YAML configuration")
 
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Home Agent from a config entry.
+    """Set up Pepa Arm Home Agent from a config entry.
 
     Args:
         hass: Home Assistant instance
@@ -73,7 +73,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     Returns:
         True if setup was successful
     """
-    _LOGGER.info("Setting up Home Agent config entry: %s", entry.entry_id)
+    _LOGGER.info("Setting up Pepa Arm Home Agent config entry: %s", entry.entry_id)
 
     # Merge config data
     config = dict(entry.data) | dict(entry.options)
@@ -110,7 +110,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     else:
         _LOGGER.info("Conversation Session Manager initialized with persistence disabled")
 
-    # Create Home Agent instance with session manager
+    # Create Pepa Arm Home Agent instance with session manager
     agent = HomeAgent(hass, config, session_manager)
 
     # Store agent instance and session manager
@@ -201,7 +201,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Register update listener to reload on config changes
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
-    _LOGGER.info("Home Agent setup complete")
+    _LOGGER.info("Pepa Arm Home Agent setup complete")
     return True
 
 
@@ -225,7 +225,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     Returns:
         True if unload was successful
     """
-    _LOGGER.info("Unloading Home Agent config entry: %s", entry.entry_id)
+    _LOGGER.info("Unloading Pepa Arm Home Agent config entry: %s", entry.entry_id)
 
     # Unregister conversation agent
     ha_conversation.async_unset_agent(hass, entry)
@@ -263,7 +263,7 @@ async def async_setup_services(
     hass: HomeAssistant,
     entry_id: str,
 ) -> None:
-    """Register Home Agent services.
+    """Register Pepa Arm Home Agent services.
 
     Args:
         hass: Home Assistant instance
@@ -745,7 +745,7 @@ async def async_setup_services(
 
 
 async def async_remove_services(hass: HomeAssistant) -> None:
-    """Remove Home Agent services.
+    """Remove Pepa Arm Home Agent services.
 
     Args:
         hass: Home Assistant instance

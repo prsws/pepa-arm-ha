@@ -1,4 +1,4 @@
-"""External LLM tool for the Home Agent integration.
+"""External LLM tool for the Pepa Arm Home Agent integration.
 
 This module provides the ExternalLLMTool that enables the primary LLM to
 delegate complex queries to a more powerful external LLM API, implementing

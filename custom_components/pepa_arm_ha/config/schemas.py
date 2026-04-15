@@ -1,4 +1,4 @@
-"""Schema definitions for Home Agent configuration.
+"""Schema definitions for Pepa Arm Home Agent configuration.
 
 This module contains all voluptuous schema definitions for the configuration
 flow, keeping form structure separate from business logic.

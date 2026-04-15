@@ -1,4 +1,4 @@
-"""Tool handler for managing and executing tools in the Home Agent component.
+"""Tool handler for managing and executing tools in the Pepa Arm Home Agent component.
 
 This module provides the ToolHandler class which orchestrates tool registration,
 validation, and execution. It acts as the bridge between the LLM's tool calls
@@ -30,7 +30,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class ToolHandler:
-    """Handles tool registration, validation, and execution for Home Agent.
+    """Handles tool registration, validation, and execution for Pepa Arm Home Agent.
 
     This class manages the lifecycle of tools that can be called by the LLM,
     including native tools (ha_control, ha_query), custom tools, and the

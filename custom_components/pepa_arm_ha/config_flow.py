@@ -1,6 +1,6 @@
-"""Config flow for Home Agent integration.
+"""Config flow for Pepa Arm Home Agent integration.
 
-This module implements the configuration UI for the Home Agent custom component,
+This module implements the configuration UI for the Pepa Arm Home Agent custom component,
 providing multi-step configuration flows for initial setup and options management.
 
 NOTE: A refactored modular version of this code is available in the config/ package:
@@ -222,9 +222,9 @@ def _migrate_legacy_backend(config: dict[str, Any]) -> dict[str, Any]:
 
 
 class HomeAgentConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
-    """Handle a config flow for Home Agent.
+    """Handle a config flow for Pepa Arm Home Agent.
 
-    This config flow implements multi-step configuration for the Home Agent
+    This config flow implements multi-step configuration for the Pepa Arm Home Agent
     integration, including initial LLM setup and validation.
     """
 
@@ -462,7 +462,7 @@ class HomeAgentConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ig
 
 
 class HomeAgentOptionsFlow(config_entries.OptionsFlow):
-    """Handle options flow for Home Agent.
+    """Handle options flow for Pepa Arm Home Agent.
 
     This options flow provides advanced configuration settings including:
     - Context injection mode and settings

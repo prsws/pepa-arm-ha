@@ -1,4 +1,4 @@
-"""Constants for the Home Agent integration."""
+"""Constants for the Pepa Arm Home Agent integration."""
 
 from typing import Final
 
