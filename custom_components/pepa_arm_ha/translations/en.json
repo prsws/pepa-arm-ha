@@ -175,7 +175,7 @@
         "title": "Configure Pepa Arm Home Agent",
         "description": "Update your Pepa Arm Home Agent configuration.",
         "menu_options": {
-          "llm_settings": "LLM Settings",
+          "llm_settings": "Primary LLM Settings",
           "context_settings": "Context Settings",
           "vector_db_settings": "Vector Database",
           "history_settings": "Conversation History",
@@ -187,7 +187,7 @@
         }
       },
       "llm_settings": {
-        "title": "LLM Settings",
+        "title": "Primary LLM Settings",
         "description": "Configure the primary LLM connection and parameters.",
         "data": {
           "llm_base_url": "LLM Base URL",
